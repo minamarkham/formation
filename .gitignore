@@ -1,0 +1,15 @@
+# Dirs
+www/
+
+# Dependency directories
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# dotenv environment variables file
+.env
+
+# mac shit
+.DS_Store

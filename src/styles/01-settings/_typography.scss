@@ -1,0 +1,86 @@
+// Typography
+
+// $base-font-size
+//
+// Base font size in used in _mixins.scss
+//
+// $base-font-size - {number}
+
+$base-font-size:              16;
+
+// $base-line-height
+//
+// Base line-height in used in _mixins.scss
+//
+// $base-line-height - {number}
+
+$base-line-height:            24;
+
+// Font Stacks
+
+// $typefaces
+//
+// Configuration of webfonts imports.
+//
+// $typefaces - {map}
+// @family - {string}
+// @weight - {integer} or {keyword} i.e. 800, bold
+// @style - {keyword} i.e. normal, italic
+
+//$typefaces: (
+//  'FILENAME': (
+//    family: 'fontname',
+//    weight: 100,
+//    style: normal,
+//  ),
+//);
+
+// $font-family-sans-fallback
+//
+// Define font stack used for sans-serifs.
+//
+// $font-family-sans-fallback - {list}
+
+$font-family-sans-fallback:   'Arial', sans-serif;
+
+// $font-family-sans
+//
+// Define font stack used for sans-serifs.
+//
+// $font-family-sans - {list}
+// @requires - `$font-family-sans-fallback`
+
+$font-family-sans:            'Helvetica Neue', 'Helvetica', $font-family-sans-fallback;
+
+// $font-family-serif
+//
+// Define font stack used for serifs.
+//
+// $font-family-serif - {list}
+
+$font-family-serif:           'Georgia', 'Cambria', 'Times New Roman', 'Times', serif;
+
+// $font-family-monospace
+//
+// Define font stack used for monospaced copy.
+//
+// $font-family-monospace - {list}
+
+$font-family-monospace:       'Inconsolata', 'Menlo', 'Consolas', 'Bitstream Vera Sans Mono', 'Courier', monospace;
+
+// $font-family-display
+//
+// Define font stack used for headings.
+//
+// $font-family-display - {list}
+
+$font-family-display:         $font-family-sans;
+
+// $font-family-default
+//
+// Define font stack used for paragraphs.
+//
+// $font-family-default - {string}
+// @requires - `$font-family-sans`
+
+$font-family-default:         $font-family-sans;

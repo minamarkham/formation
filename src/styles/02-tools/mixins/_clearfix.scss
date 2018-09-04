@@ -1,0 +1,15 @@
+// clearfix
+//
+// Nicolas Gallagher's micro clearfix hack
+// <br> (source: http://nicolasgallagher.com/micro-clearfix-hack/)
+//
+// usage - `@include clearfix`
+
+@mixin clearfix {
+  &::before,
+  &::after {
+    display: table;
+    content: '';
+  }
+  &::after { clear: both; }
+}

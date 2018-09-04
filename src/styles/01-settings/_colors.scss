@@ -1,0 +1,59 @@
+// Color Palette
+// examples based on the official Sass styleguide
+
+// descriptive colors
+// =============
+
+$hopbush:                   #c69;
+$bouquet:                   #b37399;
+$venus:                     #998099;
+$patina:                    #699;
+$nebula:                    #d2e1dd;
+$white:                     #fff;
+$dawn-pink:                 #f2ece4;
+$wafer:                     #e1d7d2;
+$iron:                      #dadbdf;
+$regent-grey:               #808c99;
+$pale-sky:                  #6b717f;
+$midnight-blue:             #036;
+$black:                     #000;
+
+// main color palette
+// =============
+$color-primary:             $hopbush;
+$color-secondary:           $bouquet;
+$color-accent:              $patina;
+$color-shadow:              rgba($black, .125);
+$color-note:                #666;
+
+// Common colors
+$color-background:          $white;
+$color-background-shade:    $iron;
+$color-background-invert:   $hopbush;
+$color-text:                darken($pale-sky, 15);
+$color-text-weak:           $regent-grey;
+$color-text-strong:         $midnight-blue;
+$color-text-heading:        $regent-grey;
+$color-text-invert:         rgba($color-background, .75);
+$color-text-strong-invert:  $color-background;
+
+// Links
+$color-link:                $color-primary;
+$color-link-hover:          $midnight-blue;
+$color-link-visited:        $bouquet;
+
+// Code
+$color-code:                #333;
+$color-code-background:     #f3f3f3;
+$color-pre:                 #d4d4d4;
+$color-pre-background:      #333;
+
+// Selections
+$color-selection:           #b3d4fc;
+
+// Messages
+$color-message:             #f4ecbb;
+$color-success:             #2cde2c;
+$color-warning:             #cf8600;
+$color-important:           #d00;
+$color-notice:              #66b;

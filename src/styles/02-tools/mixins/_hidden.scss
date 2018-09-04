@@ -1,0 +1,10 @@
+// hidden
+//
+// Hide from both screenreaders and browsers
+//
+// usage - `@include hidden`
+
+@mixin hidden {
+  display: none !important;
+  visibility: hidden;
+}

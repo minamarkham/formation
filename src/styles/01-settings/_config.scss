@@ -1,0 +1,31 @@
+// Variables
+
+// Configurations
+
+// $breakpoints
+//
+// Define major breakpoints
+// There are no common breakpoints; examples based on the official Sass styleguide
+// You'll need to define your own breakpoints to suit your design
+//
+// $breakpoints - {map}
+
+$breakpoints: (
+  small:                      480,
+  medium:                     768,
+  large:                      1024,
+  xlarge:                     1280,
+);
+
+// $zindex
+//
+// Define z-indexes for various elements
+//
+// $zindex - {map}
+// @source - http://www.sitepoint.com/using-sass-maps/
+
+$zindex: (
+  overlay:                    9000,
+  default:                    1,
+  bottomless-pit:             -10000
+);

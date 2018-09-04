@@ -1,0 +1,11 @@
+// map-deep-get($map)
+//
+// $map       - Parent map to get values from.
+// @returns   - `$map`
+// @source    - http://www.sitepoint.com/better-solution-managing-z-index-sass/
+
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  } @return $map;
+}

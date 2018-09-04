@@ -1,0 +1,20 @@
+// em()
+//
+//  Convert pixel values to ems.
+//
+// $target    - Value to convert to ems.
+// $context   - The context the conversion is based on. Defaults to `$base-font-size`
+// @requires  - `$base-font-size` / `@strip-units`
+// @returns   - number
+// @source    - http://www.pjmccormick.com/sweet-sass-function-convert-px-em
+
+@function em($target, $context: $base-font-size) {
+  @if not unitless($target) {
+    $target: strip-units($target);
+  }
+  @if not unitless($context) {
+    $context: strip-units($context);
+  }
+  @if $target == 0 { @return 0 }
+  @return $target / $context + 0em;
+}

@@ -1,0 +1,86 @@
+// Base
+//
+// Unclassed HTML elements (type selectors)
+
+@viewport { width: device-width; }
+
+html {
+  background-color: $color-background;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+* {
+  &:before,
+  &:after { box-sizing: inherit; }
+}
+
+body {
+  //-webkit-font-smoothing: antialiased;
+  //color: $color-text;
+  //font-family: $font-family-default;
+  min-height: 100%;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  background: transparent;
+  color: $color-link;
+  //text-decoration: none;
+  transition: background 350ms, color 350ms;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  //font-family: $font-family-display;
+}
+
+table {
+  text-align: left;
+  line-height: 40px;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #f37;
+  width: 100%;
+}
+
+thead tr:first-child {
+  background: #f37;
+  color: #fff;
+  border: none;
+}
+
+th:first-child,
+td:first-child {
+  padding: 0 15px 0 20px;
+}
+
+tbody tr:hover {
+  background-color: rgba(#f37, .1);
+  cursor: default;
+}
+
+td, th {
+  border-bottom: 1px solid #ddd;
+}
+
+.form-required { color: #c00; }
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 6px 0 4px;
+  border: 1px solid #ccc;
+  background: #fafafa;
+  &:focus { background: #fff; }
+}

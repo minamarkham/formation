@@ -1,0 +1,11 @@
+// strip-unit($num)
+//
+// Strip units from values.
+//
+// $num       - Value to be stripped.
+// @returns   - number
+// @source    - http://hugogiraudel.com/2013/08/12/sass-functions
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}

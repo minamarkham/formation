@@ -1,0 +1,38 @@
+// smart-underline
+//
+// Add a smart underline to text. A smart underline will make the underline
+// appear to sit behind the text descenders rather than cut through them.
+//
+// usage - `@include smart-underline`
+// $background - Background color. defaults to `$white`
+// $text - Text color. Defaults to `#000`
+// $line-color - Underline color. Defaults to `$color-primary`
+// hover-background - Background color on hover. Defaults to `$background`
+// $hover-text - Text color on hover. Defaults to `$text`
+// $hover-line-color - Underline color on hover. Defaults to `$line-color`
+// $position - `y`-position of the underline. Defaults to `89%`
+
+@mixin smart-underline(
+  $background: $white,
+  $text: #000,
+  $line-color: $color-primary,
+  $hover-background: $background,
+  $hover-text: $text,
+  $hover-line-color: $line-color,
+  $position: 89%) {
+  transition: all, .3s, ease-in-out;
+  background-image: linear-gradient($background, $background), linear-gradient($background, $background), linear-gradient($line-color, $line-color);
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  background-position: 0% $position;
+  background-size: .05em 1px, .05em 1px, 1px 1px;
+  color: inherit;
+  text-decoration: none;
+  text-shadow: .03em 0 $background, -.03em 0 $background, 0 .03em $background, 0 -.03em $background, .06em 0 $background, -.06em 0 $background, .09em 0 $background, -.09em 0 $background, .12em 0 $background, -.12em 0 $background, .15em 0 $background, -.15em 0 $background;
+
+  &::before, &::after { text-shadow: none; }
+  &:visited { color: inherit; }
+  &:hover {
+    background-image: linear-gradient($background, $background), linear-gradient($background, $background), linear-gradient($hover-line-color, $hover-line-color);
+    text-shadow: .03em 0 $hover-background, -.03em 0 $hover-background, 0 .03em $hover-background, 0 -.03em $hover-background, .06em 0 $hover-background, -.06em 0 $hover-background, .09em 0 $hover-background, -.09em 0 $hover-background, .12em 0 $hover-background, -.12em 0 $hover-background, .15em 0 $hover-background, -.15em 0 $hover-background;
+  }
+}

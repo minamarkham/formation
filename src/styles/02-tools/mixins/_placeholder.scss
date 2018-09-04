@@ -1,0 +1,17 @@
+// placeholder
+//
+// Adds appropriate vendor prefixes for placeholder text.
+//
+// usage - `@include placeholder`
+
+@mixin placeholder {
+  input::-webkit-input-placeholder { @content }
+  input:-moz-placeholder { @content }
+  input::-moz-placeholder { @content }
+  input:-ms-input-placeholder { @content }
+  input::placeholder { @content }
+  textarea::-webkit-input-placeholder { @content }
+  textarea::-moz-placeholder { @content }
+  textarea:-ms-input-placeholder { @content }
+  textarea::placeholder { @content }
+}
