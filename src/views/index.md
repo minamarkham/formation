@@ -10,7 +10,7 @@ Download the script:
 git clone https://github.com/minamarkham/formation.git && cd formation
 ```
 
-Review the script (please don't run scripts your don't understand):
+Review the script (please don't run scripts you don't understand):
 ```bash
 less slay
 ```
