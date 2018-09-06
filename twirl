@@ -512,7 +512,7 @@ github_key_check() {
 
 create_ssh_key() {
 	if ask "No SSH key found. Create one?" Y; then
-		ssh-keygen -t rsa; github_key_check;
+		ssh-keygen -t rsa -b 4096; github_key_check;
 	else
 		return 0;
 	fi
