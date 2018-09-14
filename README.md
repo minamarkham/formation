@@ -140,7 +140,7 @@ The setup process will:
 <details>
 <summary>Browsers</summary>
 
-* [Blisk](https://www.blisk.io/) for cross-device web development.
+* [Blisk](https://blisk.io/) for cross-device web development.
 * [Brave](https://brave.com/) for web browsing without ads.
 * [Chrome](https://www.google.com/chrome/browser/desktop/) for fast and free web browsing.
 * [Firefox](https://www.mozilla.org/en-US/firefox/new/) for web browsing and testing.
