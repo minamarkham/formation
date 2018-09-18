@@ -1,9 +1,8 @@
-asciinema
 git
-tig
+git-standup
+git-flow-avh
 mas
-wget
 hub
-hugo
 yarn
-rbenv
+thefuck
+fasd

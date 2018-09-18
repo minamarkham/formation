@@ -95,26 +95,26 @@ if [ -d "$HOME/.bash_it" ]; then
 else
 	step "Installing Bash-it…"
 	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
-	~/.bash_it/install.sh --silent --no-modify-config
+	~/.bash_it/install.sh --silent
 	print_success "Bash-it installed!"
 fi
 
 # -----------------------------------------------------------------------------
 # NVM
 # -----------------------------------------------------------------------------
-if [ -x nvm ]; then
-	step "Installing NVM…"
-	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-	print_success "NVM installed!"
-	step "Installing latest Node…"
-	nvm install node
-	nvm use node
-	nvm run node --version
-	nodev=$(node -v)
-	print_success "Using Node $nodev!"
-else
-	print_success_muted "NVM/Node already installed. Skipping."
-fi
+# if [ -x nvm ]; then
+# 	step "Installing NVM…"
+# 	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+# 	print_success "NVM installed!"
+# 	step "Installing latest Node…"
+# 	nvm install node
+# 	nvm use node
+# 	nvm run node --version
+# 	nodev=$(node -v)
+# 	print_success "Using Node $nodev!"
+# else
+# 	print_success_muted "NVM/Node already installed. Skipping."
+# fi
 
 # -----------------------------------------------------------------------------
 # Homebrew
