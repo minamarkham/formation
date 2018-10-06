@@ -637,7 +637,7 @@ label_green() {
     printf "\e[30;42m $1 \e[0m\e[32m $2 \033[0m\n"
 }
 
-e-lemon-ated() {
+e_lemon_ated() {
     printf "
   ${bold}Congrats! You're in formation!${normal} 🍋
 
