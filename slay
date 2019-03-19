@@ -135,8 +135,16 @@ if brew list | grep -Fq brew-cask; then
 fi
 
 ###############################################################################
-# INSTALL: brews
+# INSTALL: taps & brews
 ###############################################################################
+if [ -e $cwd/swag/taps ]; then
+	chapter "🍺 Tapping some casks for Homebrew…"
+
+	for tap in $(<$cwd/swag/taps); do
+	    tap_cask $tap
+	done
+fi
+
 if [ -e $cwd/swag/brews ]; then
 	chapter "Installing Homebrew formulae…"
 
