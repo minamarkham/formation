@@ -39,7 +39,7 @@ Your last Formation run will be saved to `~/slay.log`. To review it, run `less ~
 That's it! :sparkles:
 
 ## What it sets up
-The setup process will:
+The setup process will install:
 
 <details>
 <summary>Basic tools:</summary>
