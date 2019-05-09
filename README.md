@@ -147,7 +147,7 @@ The setup process will:
 * [TorBrowser](https://www.torproject.org/projects/torbrowser.html.en) for super secret web browsing.
 </details>
 
-<sub>See [`.swag`](.swag) for the full list of apps that will be installed. Adjust it to your personal taste.</sub>
+<sub>See [`swag`](swag) for the full list of apps that will be installed. Adjust it to your personal taste.</sub>
 
 It should take less than 20 minutes to install (depends on your machine).
 
