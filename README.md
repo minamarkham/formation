@@ -22,7 +22,8 @@ less slay
 Slay:
 
 ```sh
-sh slay 2>&1 | tee ~/slay.log
+cd formation
+./slay 2>&1 | tee ~/slay.log
 ```
 Just follow the prompts and you’ll be fine. 👌
 
