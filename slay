@@ -193,7 +193,6 @@ fi
 ###############################################################################
 chapter "Cleaning up Homebrew files…"
 brew cleanup 2> /dev/null
-brew cask cleanup 2> /dev/null
 
 ###############################################################################
 # INSTALL: npm packages
