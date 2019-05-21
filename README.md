@@ -121,7 +121,6 @@ The setup process will install:
 * [1Password](https://1password.com/) for password management.
 * [Dropbox](https://www.dropbox.com) for cloud file storage.
 * [Divvy](http://mizage.com/divvy/) for better window management.
-* [Dr Cleaner Pro Plus](https://www.drcleaner.com/)
 * [Encrypto](https://macpaw.com/encrypto) for securing files.
 * [ExpressVPN](https://www.expressvpn.com/) for privacy.
 * [HyperDock](https://bahoom.com/hyperdock/)
