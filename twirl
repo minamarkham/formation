@@ -483,6 +483,16 @@ ask() {
 # 
 ###############################################################################
 
+add_brew_taps() {
+    if test ! $(brew tap | grep $tap); then
+        echo_install "Adding $tap to Homebrew"
+		brew tap $tap >/dev/null
+		print_in_green "${bold}✓ added!${normal}\n"
+	else
+		print_success_muted "$tap already added. Skipped."
+    fi
+}
+
 # return 1 if global command line program installed, else 0
 cli_is_installed() {
     # set to 1 initially

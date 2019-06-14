@@ -135,6 +135,17 @@ if brew list | grep -Fq brew-cask; then
 fi
 
 ###############################################################################
+# ADD: brew taps
+###############################################################################
+if [ -e $cwd/swag/taps ]; then
+	chapter "Adding repositories to Homebrew formulae…"
+
+	for tap in $(<$cwd/swag/taps); do
+	    add_brew_taps $tap
+	done
+fi
+
+###############################################################################
 # INSTALL: brews
 ###############################################################################
 if [ -e $cwd/swag/brews ]; then
