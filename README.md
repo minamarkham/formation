@@ -41,6 +41,11 @@ That's it! :sparkles:
 
 ## What it sets up
 The setup process will install:
+More app can be found here. 
+http://macappstore.org/
+
+(LIST BELOW IS NOT WHAT IS INSTALLED)
+
 
 <details>
 <summary>Basic tools:</summary>
