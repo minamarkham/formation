@@ -10,7 +10,7 @@ It can be run multiple times on the same machine safely. It installs, upgrades, 
 Download the script:
 
 ```sh
-git clone git@github.com/minamarkham/formation.git && cd formation
+git clone git@github.com/asknicely/formation.git && cd formation
 ```
 
 Review the script (please don't run scripts you don't understand):
