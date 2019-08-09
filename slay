@@ -88,23 +88,11 @@ if [ ! -d "$HOME/.bin/" ]; then
 fi
 
 # -----------------------------------------------------------------------------
-# Bash-it
-# -----------------------------------------------------------------------------
-if [ -d "$HOME/.bash_it" ]; then
-	print_success_muted "Bash-it already installed. Skipping."
-else
-	step "Installing Bash-it…"
-	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
-	~/.bash_it/install.sh --silent --no-modify-config
-	print_success "Bash-it installed!"
-fi
-
-# -----------------------------------------------------------------------------
 # NVM
 # -----------------------------------------------------------------------------
 if [ -x nvm ]; then
 	step "Installing NVM…"
-	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 	print_success "NVM installed!"
 	step "Installing latest Node…"
 	nvm install node
@@ -132,6 +120,17 @@ if brew list | grep -Fq brew-cask; then
 	step "Uninstalling old Homebrew-Cask…"
 	brew uninstall --force brew-cask
 	print_success "Homebrew-Cask uninstalled!"
+fi
+
+###############################################################################
+# INSTALL: taps
+###############################################################################
+if [ -e $cwd/swag/taps ]; then
+	chapter "Installing taps via Homebrew"
+
+	for tap in $(<$cwd/swag/taps); do
+		install_tap_via_brew $tap
+	done
 fi
 
 ###############################################################################
@@ -207,6 +206,16 @@ if [ -e $cwd/swag/npm ]; then
 	done
 fi
 
+###############################################################################
+# INSTALL: vscode extensions
+###############################################################################
+if [ -e $cwd/swag/extensions ]; then
+	chapter "Installing vscode extensions"
+
+	for extension in $(<$cwd/swag/extensions); do
+	    install_vscode_extensions $extension
+	done
+fi
 
 ###############################################################################
 # OPTIONAL: Customizations

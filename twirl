@@ -565,6 +565,16 @@ install_application_via_brew() {
     fi
 }
 
+install_tap_via_brew() {
+    if [[ ! $(brew tap | grep $tap) ]]; then
+        echo_install "Installing $tap"
+        brew tap $tap >/dev/null
+        print_in_green "${bold}✓ installed!${normal}\n"
+    else
+    	print_success_muted "$tap already installed. Skipped."
+    fi
+}
+
 install_application_via_app_store() {
 	if ! mas list | grep $1 &> /dev/null; then
 		echo_install "Installing $2"
@@ -582,6 +592,16 @@ install_npm_packages() {
 		print_in_green "${bold}✓ installed!${normal}\n"
 	else
 		print_success_muted "$1 already installed. Skipped."
+	fi
+}
+
+install_vscode_extensions() {
+	if [[ ! $(code --list-extensions | grep $extension) ]]; then
+		echo_install "Installing $extension"
+		code --install-extension $extension
+		print_in_green "${bold}✓ installed!${normal}\n"
+	else
+		print_success_muted "$extension already installed. Skipped."
 	fi
 }
 

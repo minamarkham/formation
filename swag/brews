@@ -1,9 +1,12 @@
-asciinema
 git
-tig
+zsh
+zsh-completions
 mas
 wget
-hub
-hugo
 yarn
-rbenv
+awscli
+fzf
+powerlevel9k
+terraform
+zsh-syntax-highlighting
+drone/drone/drone@0.8.6
