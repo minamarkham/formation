@@ -104,7 +104,6 @@ fi
 # -----------------------------------------------------------------------------
 if ! [ -e $NVM_DIR ]; then
 	step "Installing NVM…"
-	# ensures that nvm 
 	touch ~/.bash_profile
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 	# This loads nvm for the terminal session
