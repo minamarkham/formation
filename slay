@@ -63,8 +63,8 @@ ask_for_sudo
 ###############################################################################
 # PROMPT: SSH Key
 ###############################################################################
-chapter 'Checking for SSH key…'
-ssh_key_setup
+# chapter 'Checking for SSH key…'
+# ssh_key_setup
 
 ###############################################################################
 # INSTALL: Dependencies
@@ -165,28 +165,28 @@ fi
 ###############################################################################
 # INSTALL: Mac App Store Apps
 ###############################################################################
-chapter "Installing apps from App Store…"
-if [ -x mas ]; then
+# chapter "Installing apps from App Store…"
+# if [ -x mas ]; then
 
-	print_warning "Please install mas-cli first: brew mas. Skipping."
+# 	print_warning "Please install mas-cli first: brew mas. Skipping."
 
-	else
+# 	else
 
-	if [ -e $cwd/swag/apps ]; then
-		if mas_setup; then
-			# Workaround for associative array in Bash 3
-			# https://stackoverflow.com/questions/6047648/bash-4-associative-arrays-error-declare-a-invalid-option
-			for app in $(<$cwd/swag/apps); do
-				KEY="${app%%::*}"
-				VALUE="${app##*::}"
-				install_application_via_app_store $KEY $VALUE
-			done
-		else
-			print_warning "Please signin to App Store first. Skipping."
-		fi
-	fi
+# 	if [ -e $cwd/swag/apps ]; then
+# 		if mas_setup; then
+# 			# Workaround for associative array in Bash 3
+# 			# https://stackoverflow.com/questions/6047648/bash-4-associative-arrays-error-declare-a-invalid-option
+# 			for app in $(<$cwd/swag/apps); do
+# 				KEY="${app%%::*}"
+# 				VALUE="${app##*::}"
+# 				install_application_via_app_store $KEY $VALUE
+# 			done
+# 		else
+# 			print_warning "Please signin to App Store first. Skipping."
+# 		fi
+# 	fi
 
-fi
+# fi
 
 ###############################################################################
 # CLEAN: Homebrew files
