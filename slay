@@ -90,14 +90,14 @@ fi
 # -----------------------------------------------------------------------------
 # Bash-it
 # -----------------------------------------------------------------------------
-# if [ -d "$HOME/.bash_it" ]; then
-# 	print_success_muted "Bash-it already installed. Skipping."
-# else
-# 	step "Installing Bash-it…"
-# 	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
-# 	~/.bash_it/install.sh --silent --no-modify-config
-# 	print_success "Bash-it installed!"
-# fi
+if [ -d "$HOME/.bash_it" ]; then
+	print_success_muted "Bash-it already installed. Skipping."
+else
+	step "Installing Bash-it…"
+	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
+	~/.bash_it/install.sh --silent --no-modify-config
+	print_success "Bash-it installed!"
+fi
 
 # -----------------------------------------------------------------------------
 # NVM
@@ -212,6 +212,21 @@ if [ -e $cwd/swag/npm ]; then
 	done
 fi
 
+###############################################################################
+# Mac OS Settings
+###############################################################################
+chapter "Setting up macOS prefs…"
+if [ -f "$HOME/.macos-prefs" ]; then
+	# if ask "Do you want to add hot sauce?" Y; then
+		. "$HOME/.macos-prefs"; printf "\n  Setting macOS settings. 🔥 ${bold}Swag.${normal}\n";
+	# else
+		# print_success_muted "Hot sauce declined. Skipped.";
+	# fi
+else
+	print_warning "No ~/.macos-prefs found. Skipping."
+fi
+
+
 
 ###############################################################################
 # OPTIONAL: Customizations
@@ -227,7 +242,24 @@ else
 	print_warning "No ~/.hot-sauce found. Skipping."
 fi
 
+
+###############################################################################
+# OPTIONAL: Sky Setup
+###############################################################################
+chapter "Adding attempting Sky Setup…"
+if [ -f "$HOME/.sky-setup" ]; then
+	if ask "Do you want to setup for sky dev?" Y; then
+		. "$HOME/.hot-sauce"; printf "\n  BOOM. 🔥 ${bold}Swag.${normal}\n";
+	else
+		print_success_muted "DEEENIED. Skipped.";
+	fi
+else
+	print_warning "No ~/.sky-setup found. Skipping."
+fi
+
 ###############################################################################
 # 🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋
 ###############################################################################
 e_lemon_ated
+
+

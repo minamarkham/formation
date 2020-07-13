@@ -1,0 +1,76 @@
+step "Making Sky directory…"
+mkd ~/Projects/Sky
+
+SKYAPPS=(
+    gitlab@git.bskyb.com:sdc-sports/uk-sport-web.git
+    gitlab@git.bskyb.com:sdc-news/uk-news-web.git
+    gitlab@git.bskyb.com:sdc-sports/de-sport-web.git
+    gitlab@git.bskyb.com:sdc-news/elections.git
+    git@github.com:sky-uk/sdc-skysports.git
+    git@github.com:sky-uk/sdc-cms-ng.git
+    git@github.com:sky-uk/gdp-job-families.git
+)
+
+SKYUICOMPONENTS=(
+    toolbelt
+    blackjack-liveblog
+    blackjack-sdc-article-author
+    blackjack-sdc-article-body
+    blackjack-sdc-article-factbox
+    blackjack-sdc-article-gallery
+    blackjack-sdc-article-header
+    blackjack-sdc-article-image
+    blackjack-sdc-article-quote
+    blackjack-sdc-article-segmented-bar-chart
+    blackjack-sdc-article-strapline
+    blackjack-sdc-article-tags
+    blackjack-sdc-article-video
+    blackjack-sdc-article-widget-placeholder
+    blackjack-sdc-digrev-footer
+    blackjack-sdc-digrev-header
+    blackjack-sdc-interactive-selector
+    blackjack-sdc-news-trending
+    blackjack-sdc-site-footer
+    blackjack-sdc-site-last-games
+    blackjack-sdc-site-live-on-sky
+    blackjack-sdc-site-localnav
+    blackjack-sdc-site-match-header
+    blackjack-sdc-site-match-stats
+    blackjack-sdc-site-mpu
+    blackjack-sdc-site-share
+    blackjack-sdc-site-sponsor
+    blackjack-sdc-site-table
+    blackjack-sdc-site-team-form
+    blackjack-sdc-site-team-lineup
+    blackjack-sdc-site-tiles
+    blackjack-sdc-site-trending
+    blackjack-sdc-timeline-node
+    blackjack-team-form
+    sdc-article-date
+    sdc-article-related-stories
+    sdc-interactive-decision-tree
+    sdc-maintainer-bot
+    sdc-project-base
+    sdc-project-icons
+    sdc-rgr-base
+    sdc-site-a11y-skip-links
+    sdc-site-consent-management
+    sdc-site-feature-tile
+    sdc-site-hero
+    sdc-site-layout
+    sdc-site-oddschecker
+    sdc-site-promo-panel
+)
+
+
+step "Pulling Sky Apps..."
+for skyapp in ${SKYAPPS[@]}; do
+    cd ~/Projects/Sky
+    git clone $skyapp
+done
+
+step "Pulling Sky UI Components..."
+for skyuicomponent in ${SKYUICOMPONENTS[@]}; do
+    cd ~/Projects/Sky
+    git clone gitlab@git.bskyb.com:sky-components/$skyuicomponent.git
+done

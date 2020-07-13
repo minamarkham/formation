@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+
+SETUP_ROOT=$HOME/.setup
+
+NERDFONTS_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/ryanoasis/nerd-fonts/releases/latest)
+NERDFONTS_VERSION=$(get_github_version $NERDFONTS_RELEASE)
+
+DIRECTORIES=(
+    ~/Projects
+    ~/Projects/Personal
+    ~/Projects/Other
+)
+
+NERDFONTS=(
+    SpaceMono
+    Hack
+    AnonymousPro
+    Inconsolata
+)
+
+step "Making directories…"
+for dir in ${DIRECTORIES[@]}; do
+    mkd $dir
+done
+
+step "Installing fonts…"
+for font in ${NERDFONTS[@]}; do
+    if [ ! -d ~/Library/Fonts/$font ]; then
+        printf "${indent}  [↓] $font "
+        wget -P ~/Library/Fonts https://github.com/ryanoasis/nerd-fonts/releases/download/$NERDFONTS_VERSION/$font.zip --quiet;unzip -q ~/Library/Fonts/$font -d ~/Library/Fonts/$font
+        print_in_green "${bold}✓ done!${normal}\n"
+    else
+        print_muted "${indent}✓ $font already installed. Skipped."
+    fi
+done
+
+
+step "Installing fonts…"
+#Install Zsh & Oh My Zsh
+echo "Installing Oh My ZSH..."
+curl -L http://install.ohmyz.sh | sh
+
+# echo "Setting up Oh My Zsh theme..."
+# cd  /Users/bradparbs/.oh-my-zsh/themes
+# curl https://gist.githubusercontent.com/bradp/a52fffd9cad1cd51edb7/raw/cb46de8e4c77beb7fad38c81dbddf531d9875c78/brad-muse.zsh-theme > brad-muse.zsh-theme
+
+# echo "Setting up Zsh plugins..."
+# cd ~/.oh-my-zsh/custom/plugins
+# git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
+
+echo "Setting ZSH as shell..."
+chsh -s /bin/zsh
+
+
+# Iterm customisations
+
+
+
+step "Installing VS Code extensions…"
+VSCODEEXTENSIONS=(
+    # Code Formatting 
+    dbaeumer.vscode-eslint
+    esbenp.prettier-vscode
+    niradler.prettierthis
+    michelemelluso.code-beautifier
+    sasa.vscode-sass-format
+
+    # Git
+    donjayamanne.githistory
+    eamodio.gitlens
+
+    # Collaboration
+    ms-vsliveshare.vsliveshare
+
+
+    # CSS/SCSS
+    mrmlnc.vscode-scss
+    Nkzq.sass-variables-helper
+
+    # Lang support
+    ms-python.python
+
+    # Utilities
+    mrmlnc.vscode-duplicate
+    SimonSiefke.svg-preview
+    wix.vscode-import-cost
+    naumovs.color-highlight
+    ms-azuretools.vscode-docker
+    Zeplin.zeplin
+
+    # Icon sets
+    emmanuelbeziat.vscode-great-icons
+    equinusocio.vsc-material-theme-icons
+    PKief.material-icon-theme
+    vscode-icons-team.vscode-icons
+
+    # Themes
+    gerane.Theme-Blackboard
+    gpascale.better-blackboard
+    huacnlee.theme-blackboard-plus
+    monokai.theme-monokai-pro-vscode
+    statiolake.vscode-colorscheme-blackboard
+    GitHub.github-vscode-theme
+    ryanolsonx.solarized
+)
+
+step "Making directories…"
+for vscodeextension in ${VSCODEEXTENSIONS[@]}; do
+    code --install-extension $vscodeextension
+done

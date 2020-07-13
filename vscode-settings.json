@@ -1,0 +1,123 @@
+{
+  // Editor
+  "editor.fontFamily": "Dank Mono, Operator Mono, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontSize": 16,
+  "editor.formatOnSave": true,
+  "editor.lineHeight": 32,
+  "editor.rulers": [80],
+  "editor.tabSize": 2,
+  "editor.scrollBeyondLastLine": false,
+  "editor.minimap.enabled": false,
+  "editor.fontLigatures": true,
+  "editor.renderWhitespace": "all",
+  "editor.renderControlCharacters": true,
+  "editor.smoothScrolling": true,
+  "editor.renderLineHighlight": "all",
+  "editor.snippetSuggestions": "top",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Emmet
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "emmet.preferences": {
+    "bem.elementSeparator": "__",
+    "bem.modifierSeparator": "--"
+  },
+
+  // Workbench
+  "workbench.startupEditor": "none",
+  "workbench.iconTheme": null,
+  "workbench.editor.tabSizing": "shrink",
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.settings.editor": "json",
+  "workbench.tree.indent": 20,
+  "workbench.tree.renderIndentGuides": "always",
+  "workbench.list.horizontalScrolling": true,
+  "workbench.colorTheme": "GitHub Light",
+
+  // Window
+  "window.newWindowDimensions": "maximized",
+  "window.title": "${folderName}",
+  "window.autoDetectColorScheme": true,
+  "workbench.preferredDarkColorTheme": "GitHub Dark",
+  "workbench.preferredLightColorTheme": "GitHub Light",
+
+  // Files
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/bower_components": true,
+    "**/.sass-cache": true,
+    ".nyc_output": true
+  },
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  // Search
+  "search.showLineNumbers": true,
+  "search.smartCase": true,
+
+  // Zen mode
+  "zenMode.centerLayout": false,
+  "zenMode.fullScreen": false,
+  "zenMode.hideTabs": false,
+
+  // Markdown
+  "markdown.preview.fontSize": 16,
+  "markdown.preview.lineHeight": 2,
+
+  // Integrated terminal
+  "terminal.integrated.fontSize": 16,
+  "terminal.integrated.lineHeight": 2,
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.shell.osx": "/bin/zsh",
+  "terminal.integrated.rendererType": "experimentalWebgl",
+  "terminal.external.osxExec": "Hyper.app",
+
+  // Git
+  "git.enableSmartCommit": true,
+
+  // ESlint
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+
+  // Explorer
+  "explorer.confirmDragAndDrop": false,
+  "explorer.decorations.badges": false,
+  "explorer.openEditors.visible": 0,
+
+  // Debug
+  "debug.inlineValues": true,
+  "debug.toolBarLocation": "docked",
+
+  // Prettier
+  "prettier.disableLanguages": ["markdown"],
+
+  // Lang specific settings
+  "[markdown]": {
+    "editor.lineNumbers": "off",
+    "editor.wordWrap": "bounded",
+    "files.trimTrailingWhitespace": false
+  },
+
+  // Breadcrumbs
+  "breadcrumbs.enabled": false,
+
+  // SCM
+  "scm.defaultViewMode": "tree",
+
+  // Gitlens
+  "gitlens.views.compare.files.layout": "tree",
+  "gitlens.codeLens.enabled": false,
+  "diffEditor.renderSideBySide": true,
+  "window.zoomLevel": 0
+}
