@@ -480,7 +480,7 @@ ask() {
 }
 
 ###############################################################################
-# 
+#
 ###############################################################################
 
 # return 1 if global command line program installed, else 0
@@ -546,7 +546,7 @@ gem_install_or_update() {
 }
 
 install_brews() {
-    if test ! $(brew list | grep $brew); then
+    if test ! $(brew list | grep -x $brew); then
         echo_install "Installing $brew"
 		brew install $brew >/dev/null
 		print_in_green "${bold}✓ installed!${normal}\n"
