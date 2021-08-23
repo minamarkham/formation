@@ -556,9 +556,9 @@ install_brews() {
 }
 
 install_application_via_brew() {
-    if [[ ! $(brew cask list | grep $cask) ]]; then
+    if [[ ! $(brew list --cask | grep $cask) ]]; then
         echo_install "Installing $cask"
-        brew cask install $cask --appdir=/Applications >/dev/null
+        brew install --cask $cask --appdir=/Applications >/dev/null
         print_in_green "${bold}✓ installed!${normal}\n"
     else
     	print_success_muted "$cask already installed. Skipped."
