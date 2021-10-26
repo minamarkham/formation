@@ -9,3 +9,5 @@ yarn
 rbenv
 composer
 fish
+docker
+docker-compose
