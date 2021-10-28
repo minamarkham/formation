@@ -1,4 +1,5 @@
 asciinema
+awscli
 composer
 docker
 docker-compose
@@ -8,6 +9,7 @@ hub
 hugo
 mas
 rbenv
+terraform@0.12
 tig
 wget
 yarn
