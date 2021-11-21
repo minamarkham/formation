@@ -226,7 +226,7 @@ if [[ ! $(php --version | grep "PHP 7.4") ]]; then
   brew services start php@7.4 > /dev/null
   export PATH="/usr/local/opt/php@7.4/bin:$PATH"
   export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
-  print_sucess "php@7.4 installed!\n"
+  print_success "php@7.4 installed!\n"
 else
   print_success_muted "php@7.4 already installed. Skipped."
 fi
