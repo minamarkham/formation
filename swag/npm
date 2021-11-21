@@ -10,7 +10,6 @@ gulp-cli::gulp
 hotel::hotel
 html-sketchapp-cli::html-sketchapp
 imageoptim-cli::imageOptim
-npmusic::npmusic
 pa11y::pa11y
 parrotsay::parrotsay
 vue-cli::vue
