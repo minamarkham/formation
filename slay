@@ -121,8 +121,9 @@ fi
 # -----------------------------------------------------------------------------
 if ! [ -x "$(command -v brew)" ]; then
 	step "Installing Homebrew…"
-	curl -fsS 'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
-	export PATH="/usr/local/bin:$PATH"
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+	eval "$(/opt/homebrew/bin/brew shellenv)"
 	print_success "Homebrew installed!"
 else
 	print_success_muted "Homebrew already installed. Skipping."
