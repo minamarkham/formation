@@ -528,8 +528,9 @@ ssh_key_setup() {
     fi
 }
 
+# mas account no longer works when osx > catalina. Using mas list instead
 mas_setup() {
-    if mas account > /dev/null; then
+    if mas list > /dev/null; then
         return 0
     else
         return 1

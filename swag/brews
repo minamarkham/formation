@@ -12,3 +12,4 @@ terraform@0.12
 tig
 wget
 yarn
+npm

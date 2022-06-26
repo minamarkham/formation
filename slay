@@ -100,21 +100,22 @@ else
 fi
 
 # -----------------------------------------------------------------------------
-# NVM
+# NVM - We don't need to check if installed, the installer will also upgrade it
 # -----------------------------------------------------------------------------
-if [ -x nvm ]; then
-	step "Installing NVM…"
-	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-	print_success "NVM installed!"
-	step "Installing latest Node…"
-	nvm install node
-	nvm use node
-	nvm run node --version
-	nodev=$(node -v)
-	print_success "Using Node $nodev!"
-else
-	print_success_muted "NVM/Node already installed. Skipping."
-fi
+step "Installing/Updating NVM…"
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+source ~/.nvm/nvm.sh
+print_success "NVM installed!"
+
+# -----------------------------------------------------------------------------
+# Node 16 - We need this version for mobile (as of 26/06/2022)
+# -----------------------------------------------------------------------------
+step "Installing Node 16…"
+nvm install 16
+nvm use 16
+nvm run node --version
+nodev=$(node -v)
+print_success "Using Node $nodev!"
 
 # -----------------------------------------------------------------------------
 # Homebrew
@@ -164,6 +165,12 @@ if [ -e $cwd/swag/casks ]; then
 fi
 
 ###############################################################################
+# CLEAN: Homebrew files
+###############################################################################
+chapter "Cleaning up Homebrew files…"
+brew cleanup 2> /dev/null
+
+###############################################################################
 # INSTALL: Mac App Store Apps
 ###############################################################################
 chapter "Installing apps from App Store…"
@@ -190,13 +197,7 @@ if [ -x mas ]; then
 fi
 
 ###############################################################################
-# CLEAN: Homebrew files
-###############################################################################
-chapter "Cleaning up Homebrew files…"
-brew cleanup 2> /dev/null
-
-###############################################################################
-# INSTALL: npm packages
+# INSTALL: npm global packages
 ###############################################################################
 if [ -e $cwd/swag/npm ]; then
 	chapter "Installing npm packages…"
@@ -211,7 +212,6 @@ fi
 ###############################################################################
 # INSTALL: PHP 7.4
 ###############################################################################
-
 chapter "Installing correct PHP version…"
 if [[ ! $(php --version | grep "PHP 7.4") ]]; then
   # Uninstall default PHP that ships with MacOS.
@@ -250,4 +250,5 @@ fi
 # 🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋
 ###############################################################################
 e_lemon_ated
+exec $SHELL -l
 exit
