@@ -64,15 +64,16 @@ ask_for_sudo
 # PROMPT: Warn before proceeding
 ###############################################################################
 if ! ask "HERE BE DRAGONS: You are about to undo everything formation does and remove apps. Do you want to continue?" N; then
-  exit 0
+  exec $SHELL -l
+  exit
 fi
 
 ###############################################################################
 # UNINSTALL: brews
 ###############################################################################
+chapter "Uninstalling Homebrew formulae…"
 if ask "HERE BE DRAGONS: Uninstall all brews?" N; then
   if [ -e $cwd/swag/brews ]; then
-    chapter "Uninstalling Homebrew formulae…"
 
     for brew in $(<$cwd/swag/brews); do
       uninstall_brews $brew
@@ -83,9 +84,9 @@ fi
 ###############################################################################
 # UNINSTALL: casks
 ###############################################################################
+chapter "Installing apps via Homebrew…"
 if ask "HERE BE DRAGONS: Uninstall all casks?" N; then
   if [ -e $cwd/swag/casks ]; then
-    chapter "Installing apps via Homebrew…"
 
     for cask in $(<$cwd/swag/casks); do
         uninstall_application_via_brew $cask
@@ -102,15 +103,9 @@ brew cleanup 2> /dev/null
 ###############################################################################
 # UNINSTALL: Homebrew
 ###############################################################################
+chapter "Uninstalling Homebrew…"
 if ask "HERE BE DRAGONS: Uninstall Homebrew?" N; then
-  chapter "Uninstalling Homebrew…"
-  if brew list | grep -Fq brew-cask; then
-    step "Uninstalling old Homebrew-Cask…"
-    brew uninstall --force brew-cask
-    print_success "Homebrew-Cask uninstalled!"
-  fi
-
-  if ! [ -x "$(command -v brew)" ]; then
+  if [ -x "$(command -v brew)" ]; then
     step "Uninstalling Homebrew…"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
     print_success "Homebrew removed!"

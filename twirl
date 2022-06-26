@@ -559,7 +559,7 @@ install_brews() {
 }
 
 uninstall_brews() {
-  if test ! $(brew list | grep $brew); then
+  if test $(brew list | grep $brew); then
     echo_install "Uninstalling $brew"
 		brew uninstall $brew >/dev/null
 		print_in_yellow "${bold}✓ uninstalled!${normal}\n"
@@ -580,9 +580,9 @@ install_application_via_brew() {
 }
 
 uninstall_application_via_brew() {
-    if [[ ! $(brew list --cask | grep $cask) ]]; then
+    if [[ $(brew list --cask | grep $cask) ]]; then
         echo_install "Unnstalling $cask"
-        brew uninstall --cask $cask --appdir=/Applications >/dev/null
+        brew uninstall --cask $cask >/dev/null
         print_in_yellow "${bold}✓ uninstalled!${normal}\n"
     else
     	print_success_muted "$cask not installed. Skipped."
