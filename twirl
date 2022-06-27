@@ -549,7 +549,7 @@ gem_install_or_update() {
 }
 
 install_brews() {
-  if test ! $(brew list | grep $brew); then
+  if test ! $(brew list | grep -w $brew); then
     echo_install "Installing $brew"
 		brew install $brew >/dev/null
 		print_in_green "${bold}✓ installed!${normal}\n"
@@ -559,7 +559,7 @@ install_brews() {
 }
 
 uninstall_brews() {
-  if test $(brew list | grep $brew); then
+  if test $(brew list | grep -w $brew); then
     echo_install "Uninstalling $brew"
 		brew uninstall $brew >/dev/null
 		print_in_yellow "${bold}✓ uninstalled!${normal}\n"
@@ -578,8 +578,12 @@ install_application_via_brew() {
     appname=$(curl -s "https://formulae.brew.sh/api/cask/$cask.json" | jq -r "${query}")
     appdir='/Applications'
 
-    if [[ ! $(brew list --cask | grep $cask) ]]; then
-      if [ -e "${appdir}/${appname}" ]; then
+    if [ ! -z "$appname" ] &&  [ -e "${appdir}/${appname}" ]; then
+        echo "$appname is not empty and ${appdir}/${appname} exists"
+    fi
+
+    if [[ ! $(brew list --cask | grep -w $cask) ]]; then
+      if [ ! -z "$appname" ] &&  [ -e "${appdir}/${appname}" ]; then
         print_success "$cask already installed via a non-brew process (e.g. manually). Skipped."
       else
         echo_install "Installing $cask"
@@ -592,7 +596,7 @@ install_application_via_brew() {
 }
 
 uninstall_application_via_brew() {
-    if [[ $(brew list --cask | grep $cask) ]]; then
+    if [[ $(brew list --cask | grep -w $cask) ]]; then
         echo_install "Unnstalling $cask"
         brew uninstall --cask $cask >/dev/null
         print_in_yellow "${bold}✓ uninstalled!${normal}\n"
