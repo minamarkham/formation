@@ -13,3 +13,4 @@ tig
 wget
 yarn
 npm
+jq

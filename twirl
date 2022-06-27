@@ -570,10 +570,22 @@ uninstall_brews() {
 
 install_application_via_brew() {
 
+    # There are several ways to install an app. brew install, direct download, app store.
+    # Homebrew doesn't handle alternative methods well and errors if it tries to install an app that is already there
+    # So we query the brew API and use JQ to process the JSON and get the final file name for the target app.
+    # We use this filename to check the Applications dir and see if the app is installed by something other than brew.
+    query='.artifacts | map(select(type == "array")) | .[] | map(select(type == "string")) | .[] | select(endswith(".app"))'
+    appname=$(curl -s "https://formulae.brew.sh/api/cask/$cask.json" | jq -r "${query}")
+    appdir='/Applications'
+
     if [[ ! $(brew list --cask | grep $cask) ]]; then
+      if [ -e "${appdir}/${appname}" ]; then
+        print_success "$cask already installed via a non-brew process (e.g. manually). Skipped."
+      else
         echo_install "Installing $cask"
-        brew install --cask $cask --appdir=/Applications >/dev/null
+        brew install --cask $cask --appdir=$appdir >/dev/null
         print_in_green "${bold}✓ installed!${normal}\n"
+      fi
     else
     	print_success_muted "$cask already installed. Skipped."
     fi
