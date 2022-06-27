@@ -100,11 +100,6 @@ else
 fi
 
 # -----------------------------------------------------------------------------
-# Shell Profile - ensure we have a file as some of this stuff looks for it
-# -----------------------------------------------------------------------------
-touch ~/.zprofile
-
-# -----------------------------------------------------------------------------
 # NVM - We don't need to check if installed, the installer will also upgrade it
 # -----------------------------------------------------------------------------
 step "Installing/Updating NVM…"
@@ -125,6 +120,7 @@ print_success "Using Node $nodev!"
 # -----------------------------------------------------------------------------
 # Homebrew
 # -----------------------------------------------------------------------------
+step "Installing Homebrew…"
 if ! [ -x "$(command -v brew)" ]; then
 	step "Installing Homebrew…"
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
