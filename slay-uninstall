@@ -63,7 +63,7 @@ ask_for_sudo
 ###############################################################################
 # PROMPT: Warn before proceeding
 ###############################################################################
-if ! ask "HERE BE DRAGONS: You are about to undo everything formation does and remove apps. Do you want to continue?" N; then
+if ! ask "HERE BE DRAGONS: You are about to undo things formation does and remove apps. Do you want to continue?" N; then
   exec $SHELL -l
   exit
 fi
@@ -74,7 +74,6 @@ fi
 chapter "Uninstalling Homebrew formulae…"
 if ask "HERE BE DRAGONS: Uninstall all brews?" N; then
   if [ -e $cwd/swag/brews ]; then
-
     for brew in $(<$cwd/swag/brews); do
       uninstall_brews $brew
     done
@@ -87,7 +86,6 @@ fi
 chapter "Installing apps via Homebrew…"
 if ask "HERE BE DRAGONS: Uninstall all casks?" N; then
   if [ -e $cwd/swag/casks ]; then
-
     for cask in $(<$cwd/swag/casks); do
         uninstall_application_via_brew $cask
     done
@@ -110,6 +108,13 @@ if ask "HERE BE DRAGONS: Uninstall Homebrew?" N; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
     print_success "Homebrew removed!"
   fi
+fi
+
+###############################################################################
+# UNINSTALL: NVM
+###############################################################################
+if ask "HERE BE DRAGONS: Uninstall NVM?" N; then
+  rm -rf "$NVM_DIR"
 fi
 
 ###############################################################################

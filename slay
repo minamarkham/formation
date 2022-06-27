@@ -100,20 +100,25 @@ else
 fi
 
 # -----------------------------------------------------------------------------
+# Shell Profile - ensure we have a file as some of this stuff looks for it
+# -----------------------------------------------------------------------------
+touch ~/.zprofile
+
+# -----------------------------------------------------------------------------
 # NVM - We don't need to check if installed, the installer will also upgrade it
 # -----------------------------------------------------------------------------
 step "Installing/Updating NVM…"
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-source ~/.nvm/nvm.sh
+curl -s https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash  > /dev/null
+source $NVM_DIR/nvm.sh
 print_success "NVM installed!"
 
 # -----------------------------------------------------------------------------
 # Node 16 - We need this version for mobile (as of 26/06/2022)
 # -----------------------------------------------------------------------------
 step "Installing Node 16…"
-nvm install 16
-nvm use 16
-nvm run node --version
+nvm install 16 > /dev/null
+nvm use 16 > /dev/null
+nvm run node --version > /dev/null
 nodev=$(node -v)
 print_success "Using Node $nodev!"
 
