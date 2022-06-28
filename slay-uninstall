@@ -96,6 +96,7 @@ fi
 ###############################################################################
 chapter "Cleaning up Homebrew files…"
 brew cleanup 2> /dev/null
+print_success "Homebrew files cleanup done!"
 
 ###############################################################################
 # UNINSTALL: Homebrew
@@ -112,7 +113,7 @@ fi
 ###############################################################################
 # UNINSTALL: NVM
 ###############################################################################
-chapter "Uninstalling NPM…"
+chapter "Uninstalling NVM…"
 if ask "HERE BE DRAGONS: Uninstall NVM?" N; then
   rm -rf "$NVM_DIR"
 fi
