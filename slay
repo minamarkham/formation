@@ -100,7 +100,7 @@ else
 fi
 
 # -----------------------------------------------------------------------------
-# NVM - We don't need to check if installed, the installer will also upgrade it
+# NVM - We don't need to check if installed. Re-running is harmless
 # -----------------------------------------------------------------------------
 step "Installing/Updating NVM…"
 curl -s https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash  > /dev/null
