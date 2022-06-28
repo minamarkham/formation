@@ -99,54 +99,54 @@ else
 	print_success "Bash-it installed!"
 fi
 
-# # -----------------------------------------------------------------------------
-# # NVM - We don't need to check if installed, the installer will also upgrade it
-# # -----------------------------------------------------------------------------
-# step "Installing/Updating NVM…"
-# curl -s https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash  > /dev/null
-# source $NVM_DIR/nvm.sh
-# print_success "NVM installed!"
+ # -----------------------------------------------------------------------------
+ # NVM - We don't need to check if installed, the installer will also upgrade it
+ # -----------------------------------------------------------------------------
+ step "Installing/Updating NVM…"
+ curl -s https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash  > /dev/null
+ source $NVM_DIR/nvm.sh
+ print_success "NVM installed!"
 
-# # -----------------------------------------------------------------------------
-# # Node 16 - We need this version for mobile (as of 26/06/2022)
-# # -----------------------------------------------------------------------------
-# step "Installing Node 16…"
-# nvm install 16 > /dev/null
-# nvm use 16 > /dev/null
-# nvm run node --version > /dev/null
-# nodev=$(node -v)
-# print_success "Using Node $nodev!"
+ # -----------------------------------------------------------------------------
+ # Node 16 - We need this version for mobile (as of 26/06/2022)
+ # -----------------------------------------------------------------------------
+ step "Installing Node 16…"
+ nvm install 16 > /dev/null
+ nvm use 16 > /dev/null
+ nvm run node --version > /dev/null
+ nodev=$(node -v)
+ print_success "Using Node $nodev!"
 
-# # -----------------------------------------------------------------------------
-# # Homebrew
-# # -----------------------------------------------------------------------------
-# step "Installing Homebrew…"
-# if ! [ -x "$(command -v brew)" ]; then
-# 	step "Installing Homebrew…"
-# 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# 	echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-# 	eval "$(/opt/homebrew/bin/brew shellenv)"
-# 	print_success "Homebrew installed!"
-# else
-# 	print_success_muted "Homebrew already installed. Skipping."
-# fi
+ # -----------------------------------------------------------------------------
+ # Homebrew
+ # -----------------------------------------------------------------------------
+ step "Installing Homebrew…"
+ if ! [ -x "$(command -v brew)" ]; then
+ 	step "Installing Homebrew…"
+ 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+ 	echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+ 	eval "$(/opt/homebrew/bin/brew shellenv)"
+ 	print_success "Homebrew installed!"
+ else
+ 	print_success_muted "Homebrew already installed. Skipping."
+ fi
 
-# if brew list | grep -Fq brew-cask; then
-# 	step "Uninstalling old Homebrew-Cask…"
-# 	brew uninstall --force brew-cask
-# 	print_success "Homebrew-Cask uninstalled!"
-# fi
+ if brew list | grep -Fq brew-cask; then
+ 	step "Uninstalling old Homebrew-Cask…"
+ 	brew uninstall --force brew-cask
+ 	print_success "Homebrew-Cask uninstalled!"
+ fi
 
-# ###############################################################################
-# # INSTALL: brews
-# ###############################################################################
-# if [ -e $cwd/swag/brews ]; then
-# 	chapter "Installing Homebrew formulae…"
+ ###############################################################################
+ # INSTALL: brews
+ ###############################################################################
+ if [ -e $cwd/swag/brews ]; then
+ 	chapter "Installing Homebrew formulae…"
 
-# 	for brew in $(<$cwd/swag/brews); do
-# 		install_brews $brew
-# 	done
-# fi
+ 	for brew in $(<$cwd/swag/brews); do
+ 		install_brews $brew
+ 	done
+ fi
 
 ###############################################################################
 # UPDATE: Homebrew
