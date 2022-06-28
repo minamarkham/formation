@@ -149,6 +149,14 @@ if [ -e $cwd/swag/brews ]; then
 fi
 
 ###############################################################################
+# LINK: java if it exists
+###############################################################################
+if [ -e "/usr/local/opt/openjdk/libexec/openjdk.jdk" ]; then
+	sudo ln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+	print_success "Java symlink added!"
+fi
+
+###############################################################################
 # UPDATE: Homebrew
 ###############################################################################
 chapter "Updating Homebrew formulae…"
