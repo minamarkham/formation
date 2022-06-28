@@ -94,9 +94,11 @@ fi
 ###############################################################################
 # CLEAN: Homebrew files
 ###############################################################################
-chapter "Cleaning up Homebrew files…"
-brew cleanup 2> /dev/null
-print_success "Homebrew files cleanup done!"
+if [ -x "$(command -v brew)" ]; then
+  chapter "Cleaning up Homebrew files…"
+  brew cleanup 2> /dev/null
+  print_success "Homebrew files cleanup done!"
+fi
 
 ###############################################################################
 # UNINSTALL: Homebrew
