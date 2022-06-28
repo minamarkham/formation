@@ -6,12 +6,12 @@ fish
 git
 hub
 hugo
+java
+jq
 mas
+npm
 rbenv
 terraform@0.12
 tig
 wget
 yarn
-npm
-jq
-java
