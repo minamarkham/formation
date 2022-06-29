@@ -103,6 +103,7 @@ fi
 # ENV - Make sure we have the correct shell files for the below to write to
 # -----------------------------------------------------------------------------
 touch ~/.zshrc
+touch ~/.zprofile
 
 # -----------------------------------------------------------------------------
 # NVM - We don't need to check if installed. Re-running is harmless
