@@ -100,25 +100,34 @@ else
 fi
 
 # -----------------------------------------------------------------------------
-# NVM
+# ENV - Make sure we have the correct shell files for the below to write to
 # -----------------------------------------------------------------------------
-if [ -x nvm ]; then
-	step "Installing NVM…"
-	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-	print_success "NVM installed!"
-	step "Installing latest Node…"
-	nvm install node
-	nvm use node
-	nvm run node --version
-	nodev=$(node -v)
-	print_success "Using Node $nodev!"
-else
-	print_success_muted "NVM/Node already installed. Skipping."
-fi
+touch ~/.zshrc
+touch ~/.zprofile
+
+# -----------------------------------------------------------------------------
+# NVM - We don't need to check if installed. Re-running is harmless
+# -----------------------------------------------------------------------------
+step "Installing/Updating NVM…"
+curl -s https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash  > /dev/null
+source ~/.zshrc
+source $NVM_DIR/nvm.sh
+print_success "NVM installed!"
+
+# -----------------------------------------------------------------------------
+# Node 16 - We need this version for mobile (as of 26/06/2022)
+# -----------------------------------------------------------------------------
+step "Installing Node 16…"
+nvm install 16 > /dev/null
+nvm use 16 > /dev/null
+nvm run node --version > /dev/null
+nodev=$(node -v)
+print_success "Using Node $nodev!"
 
 # -----------------------------------------------------------------------------
 # Homebrew
 # -----------------------------------------------------------------------------
+step "Installing Homebrew…"
 if ! [ -x "$(command -v brew)" ]; then
 	step "Installing Homebrew…"
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -147,6 +156,14 @@ if [ -e $cwd/swag/brews ]; then
 fi
 
 ###############################################################################
+# LINK: java if it exists
+###############################################################################
+if [ -e "/usr/local/opt/openjdk/libexec/openjdk.jdk" ]; then
+	sudo ln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+	print_success "Java symlink added!"
+fi
+
+###############################################################################
 # UPDATE: Homebrew
 ###############################################################################
 chapter "Updating Homebrew formulae…"
@@ -162,6 +179,12 @@ if [ -e $cwd/swag/casks ]; then
 	    install_application_via_brew $cask
 	done
 fi
+
+###############################################################################
+# CLEAN: Homebrew files
+###############################################################################
+chapter "Cleaning up Homebrew files…"
+brew cleanup 2> /dev/null
 
 ###############################################################################
 # INSTALL: Mac App Store Apps
@@ -190,13 +213,7 @@ if [ -x mas ]; then
 fi
 
 ###############################################################################
-# CLEAN: Homebrew files
-###############################################################################
-chapter "Cleaning up Homebrew files…"
-brew cleanup 2> /dev/null
-
-###############################################################################
-# INSTALL: npm packages
+# INSTALL: npm global packages
 ###############################################################################
 if [ -e $cwd/swag/npm ]; then
 	chapter "Installing npm packages…"
@@ -211,7 +228,6 @@ fi
 ###############################################################################
 # INSTALL: PHP 7.4
 ###############################################################################
-
 chapter "Installing correct PHP version…"
 if [[ ! $(php --version | grep "PHP 7.4") ]]; then
   # Uninstall default PHP that ships with MacOS.
@@ -250,4 +266,5 @@ fi
 # 🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋
 ###############################################################################
 e_lemon_ated
+exec $SHELL -l
 exit

@@ -1,0 +1,128 @@
+#!/usr/bin/env bash
+
+###############################################################################
+# ERROR: Let the user know if the script fails
+###############################################################################
+
+trap 'ret=$?; test $ret -ne 0 && printf "\n   \e[31m\033[0m  Formation failed  \e[31m\033[0m\n" >&2; exit $ret' EXIT
+
+set -e
+
+###############################################################################
+# TWIRL: Check for required functions file
+###############################################################################
+if [ -e twirl ]; then
+	cd "$(dirname "${BASH_SOURCE[0]}")" \
+		&& . "twirl"
+else
+	printf "\n ⚠️  ./twirl not found  💃🏾 First, you need to twirl on your haters\n"
+	exit 1
+fi
+
+###############################################################################
+# CHECK: Bash version
+###############################################################################
+
+check_bash_version
+
+###############################################################################
+# Get in Formation!          http://patorjk.com/software/taag/ ( font: Script )
+###############################################################################
+
+printf "
+   _
+  | |
+  | |  __   ,_    _  _  _    __, _|_ 🍋  __   _  _
+  |/  /  \_/  |  / |/ |/ |  /  |  |  |  /  \_/ |/ |
+  |__/\__/    |_/  |  |  |_/\_/|_/|_/|_/\__/   |  |
+  |\  ---------------------------------------------
+  |/  Cause you slay           [for Bash 3.2 - 3.9]
+╭───────────────────────────────────────────────────╮
+│  Okay developers now let's get in ${bold}formation${normal}.      │
+│───────────────────────────────────────────────────│
+│  Safe to run multiple times on the same machine.  │
+│  It ${green}installs${reset}, ${blue}upgrades${reset}, or ${yellow}skips${reset} packages based   │
+│  on what is already installed on the machine.     │
+╰───────────────────────────────────────────────────╯
+   ${dim}$(get_os) $(get_os_version) ${normal} // ${dim}$BASH ${normal} // ${dim}$BASH_VERSION${reset}
+"
+
+###############################################################################
+# CHECK: Internet
+###############################################################################
+chapter "Checking internet connection…"
+check_internet_connection
+
+###############################################################################
+# PROMPT: Password
+###############################################################################
+chapter "Caching password…"
+ask_for_sudo
+
+###############################################################################
+# PROMPT: Warn before proceeding
+###############################################################################
+if ! ask "HERE BE DRAGONS: You are about to undo things formation does and remove apps. Do you want to continue?" N; then
+  exec $SHELL -l
+  exit
+fi
+
+###############################################################################
+# UNINSTALL: brews
+###############################################################################
+chapter "Uninstalling Homebrew formulae…"
+if ask "HERE BE DRAGONS: Uninstall all brews?" N; then
+  if [ -e $cwd/swag/brews ]; then
+    for brew in $(<$cwd/swag/brews); do
+      uninstall_brews $brew
+    done
+  fi
+fi
+
+###############################################################################
+# UNINSTALL: casks
+###############################################################################
+chapter "Installing apps via Homebrew…"
+if ask "HERE BE DRAGONS: Uninstall all casks?" N; then
+  if [ -e $cwd/swag/casks ]; then
+    for cask in $(<$cwd/swag/casks); do
+        uninstall_application_via_brew $cask
+    done
+  fi
+fi
+
+###############################################################################
+# CLEAN: Homebrew files
+###############################################################################
+if [ -x "$(command -v brew)" ]; then
+  chapter "Cleaning up Homebrew files…"
+  brew cleanup 2> /dev/null
+  print_success "Homebrew files cleanup done!"
+fi
+
+###############################################################################
+# UNINSTALL: Homebrew
+###############################################################################
+chapter "Uninstalling Homebrew…"
+if ask "HERE BE DRAGONS: Uninstall Homebrew?" N; then
+  if [ -x "$(command -v brew)" ]; then
+    step "Uninstalling Homebrew…"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
+    print_success "Homebrew removed!"
+  fi
+fi
+
+###############################################################################
+# UNINSTALL: NVM
+###############################################################################
+chapter "Uninstalling NVM…"
+if ask "HERE BE DRAGONS: Uninstall NVM?" N; then
+  rm -rf "$NVM_DIR"
+fi
+
+###############################################################################
+# 🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋
+###############################################################################
+e_lemon_ated
+exec $SHELL -l
+exit

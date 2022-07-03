@@ -528,8 +528,11 @@ ssh_key_setup() {
     fi
 }
 
+# Account-level actions via mas no longer work for osx > catalina.
+# This is a pain, as we can only check if mas is functional, not that it has access to the user app store
+#
 mas_setup() {
-    if mas account > /dev/null; then
+    if mas list > /dev/null; then
         return 0
     else
         return 1
@@ -546,8 +549,8 @@ gem_install_or_update() {
 }
 
 install_brews() {
-    if test ! $(brew list | grep $brew); then
-        echo_install "Installing $brew"
+  if test ! $(brew list | grep -w $brew); then
+    echo_install "Installing $brew"
 		brew install $brew >/dev/null
 		print_in_green "${bold}✓ installed!${normal}\n"
 	else
@@ -555,13 +558,46 @@ install_brews() {
     fi
 }
 
+uninstall_brews() {
+  if test $(brew list | grep -w $brew); then
+    echo_install "Uninstalling $brew"
+		brew uninstall $brew >/dev/null
+		print_in_yellow "${bold}✓ uninstalled!${normal}\n"
+	else
+		print_success_muted "$brew not installed. Skipped."
+    fi
+}
+
 install_application_via_brew() {
-    if [[ ! $(brew list --cask | grep $cask) ]]; then
+
+    # There are several ways to install an app. brew install, direct download, app store.
+    # Homebrew doesn't handle alternative methods well and errors if it tries to install an app that is already there
+    # So we query the brew API and use JQ to process the JSON and get the final file name for the target app.
+    # We use this filename to check the Applications dir and see if the app is installed by something other than brew.
+    query='.artifacts | map(select(type == "array")) | .[] | map(select(type == "string")) | .[] | select(endswith(".app"))'
+    appname=$(curl -s "https://formulae.brew.sh/api/cask/$cask.json" | jq -r "${query}")
+    appdir='/Applications'
+
+    if [[ ! $(brew list --cask | grep -w $cask) ]]; then
+      if [ ! -z "$appname" ] &&  [ -e "${appdir}/${appname}" ]; then
+        print_success "$cask already installed via a non-brew process (e.g. manually). Skipped."
+      else
         echo_install "Installing $cask"
-        brew install --cask $cask --appdir=/Applications >/dev/null
+        brew install --cask $cask --appdir=$appdir >/dev/null
         print_in_green "${bold}✓ installed!${normal}\n"
+      fi
     else
     	print_success_muted "$cask already installed. Skipped."
+    fi
+}
+
+uninstall_application_via_brew() {
+    if [[ $(brew list --cask | grep -w $cask) ]]; then
+        echo_install "Unnstalling $cask"
+        brew uninstall --cask $cask >/dev/null
+        print_in_yellow "${bold}✓ uninstalled!${normal}\n"
+    else
+    	print_success_muted "$cask not installed. Skipped."
     fi
 }
 
