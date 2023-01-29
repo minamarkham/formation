@@ -243,7 +243,6 @@ if [[ ! $(php --version | grep "PHP 7.4") ]]; then
   brew install shivammathur/php/php@8.2 > /dev/null
 
   # Need to specify this, otherwise it just installs the default 7.3.29 that ships with Big Sur.
-  brew link --force --overwrite php@7.4 > /dev/null
   brew link --overwrite --force shivammathur/php/php@7.4 > /dev/null
   export PATH="/usr/local/opt/php@7.4/bin:$PATH"
   export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
