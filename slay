@@ -228,7 +228,7 @@ fi
 ###############################################################################
 # INSTALL: PHP 7.4
 ###############################################################################
-chapter "Installing correct PHP version…"
+chapter "Installing PHP version 7.4…"
 if [[ ! $(php --version | grep "PHP 7.4") ]]; then
   # Uninstall default PHP that ships with MacOS.
   if brew ls --versions php > /dev/null; then
@@ -236,11 +236,14 @@ if [[ ! $(php --version | grep "PHP 7.4") ]]; then
   fi
 
   echo_install "Installing php@7.4"
-  brew install php@7.4 > /dev/null
+  brew tap shivammathur/php
+  brew install shivammathur/php/php@7.4 > /dev/null
+  brew install shivammathur/php/php@8.0 > /dev/null
+  brew install shivammathur/php/php@8.1 > /dev/null
+  brew install shivammathur/php/php@8.2 > /dev/null
 
   # Need to specify this, otherwise it just installs the default 7.3.29 that ships with Big Sur.
-  brew link --force --overwrite php@7.4 > /dev/null
-  brew services start php@7.4 > /dev/null
+  brew link --overwrite --force shivammathur/php/php@7.4 > /dev/null
   export PATH="/usr/local/opt/php@7.4/bin:$PATH"
   export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
   print_success "php@7.4 installed!\n"

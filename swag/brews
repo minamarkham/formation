@@ -11,7 +11,7 @@ jq
 mas
 npm
 rbenv
-terraform@0.12
+terraform
 tig
 wget
 yarn
