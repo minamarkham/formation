@@ -12,4 +12,4 @@ html-sketchapp-cli::html-sketchapp
 imageoptim-cli::imageOptim
 pa11y::pa11y
 parrotsay::parrotsay
-vue-cli::vue
+@vue/cli::vue
