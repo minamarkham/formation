@@ -11,7 +11,7 @@
 		title = site.title + ' | slay.sh',
 		desc = site.description,
 		url = thisUrl,
-		img = env.baseUrl + site.og.image.rel,
+		img = site.og.image.rel,
 		img_alt = site.og.image.alt,
 		twitter_card_type = "summary_large_image",
 		twitter_handle = site.author.handle,
@@ -40,16 +40,4 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,800;0,9..40,900;0,9..40,1000;1,9..40,400;1,9..40,700&family=Stint+Ultra+Expanded&display=swap" rel="stylesheet">
-
-	{% if env.isProduction %}
-	<script type="text/javascript">
-		if ('serviceWorker' in navigator) {
-			navigator.serviceWorker.register('/service-worker.js')
-			.then(function() {
-				console.log("ServiceWorker has been registered!");
-			})
-			.catch(console.error);
-		}
-	</script>
-	{% endif %}
 </head>

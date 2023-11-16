@@ -73,6 +73,8 @@
 
 	/* focus */
 	--focus-outline: 0.3ch solid var(--color-text);
+
+	--border-weight-s: 0.1rem;
 }
 
 *,
@@ -376,6 +378,16 @@ footer {
 	padding-top: var(--space-m);
 	padding-bottom: var(--space-m);
 
+	span {
+		display: none;
+	}
+
+	@media screen and (min-width: 420px) {
+		span {
+			display: inline-block;
+		}
+	}
+
 	@media screen and (min-width: 45em) {
 		grid-column: 2 / span 12;
 	}
@@ -384,18 +396,20 @@ footer {
 .hero__body {
 	font-size: var(--text-m);
 	font-family: var(--font-mono);
+	margin-top: var(--space-l);
 	margin-bottom: 0;
 	grid-column-start: 2;
-	border-color: var(--color-text);
-	border-style: solid;
-	border-width: 0;
-	border-left-width: var(--border-weight-s);
-	padding-left: var(--space-l);
 
 	@media screen and (min-width: 45em) {
 		grid-column-start: auto;
 		grid-column-end: span 8;
 		border-left-width: var(--border-weight-s);
+		border-color: var(--color-text);
+		border-style: solid;
+		border-width: 0;
+		border-left-width: var(--border-weight-s);
+		padding-left: var(--space-l);
+		margin-top: 0;
 	}
 }
 
@@ -431,16 +445,18 @@ footer {
 
 .column__right {
 	grid-column-start: 2;
-	border-color: var(--color-text);
-	border-style: solid;
-	border-width: 0;
-	border-left-width: var(--border-weight-s);
-	padding-left: var(--space-l);
+	margin-top: var(--space-l);
 
 	@media screen and (min-width: 45em) {
 		grid-column-end: span 6;
 		align-self: stretch;
 		grid-column-start: auto;
+		border-color: var(--color-text);
+		border-style: solid;
+		border-width: 0;
+		border-left-width: var(--border-weight-s);
+		padding-left: var(--space-l);
+		margin-top: 0;
 	}
 }
 

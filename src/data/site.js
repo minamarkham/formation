@@ -15,10 +15,10 @@ module.exports = {
 		type: 'website',
 		image: {
 			rel: '/og-default.jpg',
-			alt: 'Default OG image displayed here',
+			alt: 'Terminal prompt: $ git in formation',
 		},
 	},
-	themeColor: '#00e2e6',
+	themeColor: '#FF1493',
 	backgroundColor: '#ffffff',
 	favicon: '/favicon.ico',
 	icon: '/icon.svg',
