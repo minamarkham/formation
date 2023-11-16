@@ -177,6 +177,12 @@ li {
 	}
 }
 
+button {
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
 code {
 	font-family: var(--font-mono);
 	padding: var(--space-xs);

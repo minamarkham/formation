@@ -20,8 +20,18 @@ if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').match
 	themes = dark;
 }
 
-const r = document.querySelector(':root');
-const keys = Object.keys(themes);
-const theme = themes[keys[(keys.length * Math.random()) << 0]];
-r.style.setProperty('--background', theme.bg);
-r.style.setProperty('--foreground', theme.fg);
+const themeTrigger = document.querySelector('#theme-trigger');
+
+function setTheme() {
+	const r = document.querySelector(':root');
+	const keys = Object.keys(themes);
+	const theme = themes[keys[(keys.length * Math.random()) << 0]];
+	r.style.setProperty('--background', theme.bg);
+	r.style.setProperty('--foreground', theme.fg);
+}
+
+themeTrigger.addEventListener('click', () => {
+	setTheme();
+});
+
+setTheme();
