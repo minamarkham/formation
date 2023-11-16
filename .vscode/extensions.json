@@ -1,0 +1,8 @@
+{
+	"recommendations": [
+		"esbenp.prettier-vscode",
+		"ginfuru.better-nunjucks",
+		"stylelint.vscode-stylelint",
+		"dbaeumer.vscode-eslint"
+	]
+}

@@ -1,0 +1,20 @@
+---
+permalink: '/manifest.webmanifest'
+eleventyExcludeFromCollections: true
+---
+{
+	"name": "{{ site.title }}",
+	"short_name": "{{ site.shortName }}",
+	"theme_color": "{{ site.themeColor }}",
+	"background_color": "{{ site.backgroundColor }}",
+	"display": "standalone",
+	"start_url": "/",
+	"icons": [
+		{
+			"src": "/512x512.png",
+			"type": "image/png",
+			"sizes": "512x512",
+			"purpose": "any maskable"
+		}
+	]
+}

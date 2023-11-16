@@ -1,0 +1,93 @@
+---
+permalink: /
+---
+
+<!DOCTYPE html>
+<html lang={{ site.lang }}>
+<!-- head -->
+{% include "partials/head.njk" %}
+
+<body>
+	<!-- Skip to content link -->
+	<a class="visually-hidden skip-link" href="#skip">Skip to content</a>
+
+	<main id="skip" class="main__content">
+		<section class="hero">
+			<p class="hero__eyebrow">
+				<span>Easy setup</span>
+				<svg width="30" height="30" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<title></title>
+					<g fill="var(--color-text)" fill-rule="nonzero">
+						<path d="M12,22 C17.5228475,22 22,17.5228475 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,17.5228475 6.4771525,22 12,22 Z M12,20.5 L12,3.5 C16.6944204,3.5 20.5,7.30557963 20.5,12 C20.5,16.6944204 16.6944204,20.5 12,20.5 Z" />
+					</g>
+				</svg>
+				<span>Painless updates</span>
+			</p>
+			<h1>Formation</h1>
+			<div class="menu">
+				<details class="menu__contents" open>
+					<summary class="menu__toggle" tabindex="-1">Menu</summary>
+					<a class="menu__button" href="https://github.com/minamarkham/formation">Get Formation</a>
+					<a class="menu__button" href="#instructions">Instructions</a>
+				</details>
+			</div>
+			<p class="hero__body">Formation is a shell script to set up a macOS machine for design and development. Safe to run multiple times on the same machine. It installs, upgrades, or skips packages based on what is already installed on the machine.</p>
+			<h2 class="hero__banner">Get your machine in formation!</h2>
+		</section>
+
+		<section id="instructions" class="column__left">
+			<h2>Getting started</h2>
+			<ul>
+				<li>Download the script using <code>git clone https://github.com/minamarkham/formation.git</code><br />and then <code>cd formation</code>.</li>
+				<li>Review the script (please don't run scripts your don't understand): <code>less slay</code></li>
+				<li>Slay:<code>sh slay 2&gt;&amp;1 | tee ~/formation.log</code></li>
+				<li>Optionally, review the log: <code>less ~/formation.log</code></li>
+			</ul>
+			<h2>What you get</h2>
+			<ul>
+				<li>XCode Command Line Tools for developer essentials.</li>
+				<li>Bash-it, for a more powerful bash.</li>
+				<li>Git for version control</li>
+				<li>Homebrew for managing operating system libraries.</li>
+			</ul>
+			<br/>
+			<p>Check <code>swag</code> for the full list of apps installed.</p>
+			<h2>Debugging</h2>
+			<p>Your last Formation run will be saved to <code>~/formation.log</code>. Read through it to see if you can debug the issue yourself. If not, copy the lines where the script failed into a new GitHub Issue. Or, attach the whole log file as an attachment.</p>
+		</section>
+
+		<section class="column__right">
+			<h2>Just add ~./hot-sauce!</h2>
+			<p>Your <code>~/.hot-sauce</code> is added at the end of your Formation. Put your customizations there.</p>
+			<pre><code>#!/usr/bin/env bash
+
+DIRECTORIES=(
+  $HOME/Desktop/code
+  $HOME/Desktop/design
+  $HOME/Desktop/*dump
+  $HOME/Desktop/GIFs
+  $HOME/Desktop/projects
+  $HOME/Desktop/screenshots
+)
+
+step &quot;Making directories…&quot;
+for dir in ${DIRECTORIES[@]}; do
+  mkd $dir
+done
+</code></pre>
+			<p>Write your customizations such that they can be run safely more than once. See the <code>slay</code> script for examples. Formation functions such as <code>print_success</code> and <code>install_brews</code> can be used in your <code>~/.hot-sauce</code>.</p>
+		</section>
+		<section class="kicker">
+			<h2>Acknowledgements</h2>
+			<p>Inspired by thoughtbot's <a href="https://github.com/thoughtbot/laptop/">laptop</a>, Mathias Bynens' <a href="https://github.com/mathiasbynens/dotfiles">dotfiles</a>, Cătălin Mariș's <a href="https://github.com/alrra/dotfiles">dotfiles</a> and more.</p>
+		</section>
+
+		<!-- footer -->
+		<footer><p>&copy; {% year %} by <a href="https://mina.codes">Mina</a>. Cuz I slay.</p></footer>
+	</main>
+
+	<!-- scripts -->
+	{% script "src/assets/scripts/main.js" | url %}
+</body>
+
+</html>

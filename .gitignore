@@ -1,15 +1,29 @@
-# Dirs
+# build artifacts
 www/
 
-# Dependency directories
-node_modules/
-
-# Logs
+# secrets and errors
+.env
 *.log
 npm-debug.log*
 
-# dotenv environment variables file
-.env
-
-# mac shit
+# macOS related files
 .DS_Store
+Icon?
+
+# dependency directories
+node_modules/
+
+# temporary files
+.npm
+
+# cache and maps
+.eslintcache
+.cache
+*.css.map
+
+# deployment Files
+.netlify
+
+# 711ty caches responsive images
+# Don't commit otherwise your build won't generate any images
+.seven11ty.cache
