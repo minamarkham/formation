@@ -9,17 +9,17 @@ It can be run multiple times on the same machine safely. It installs, upgrades, 
 
 1. Fork this repository
 2. Clone your fork
-3. Run `yarn start`
+3. Run `npm start`
 4. Visit `localhost:8080` in your browser
 
-Most of the time, `yarn start` will suffice, but there are other commands you may find useful:
+Most of the time, `npm start` will suffice, but there are other commands you may find useful:
 
-- `yarn build`: Builds the website and compiles Sass for production
-- `yarn clean`: Wipes the output folder and 711ty cache
-- `yarn eleventy:serve`: Starts just the dev server (no Sass)
-- `yarn eleventy:build`: Builds the website (no Sass)
-- `yarn sass:watch`: Starts Sass compiler in watch mode (compile on the fly)
-- `yarn sass:build`: Generates CSS from Sass
+- `npm run build`: Builds the website and compiles Sass for production
+- `npm run clean`: Wipes the output folder and 711ty cache
+- `npm run eleventy:serve`: Starts just the dev server (no Sass)
+- `npm run eleventy:build`: Builds the website (no Sass)
+- `npm run sass:watch`: Starts Sass compiler in watch mode (compile on the fly)
+- `npm run sass:build`: Generates CSS from Sass
 
 ## License
 
