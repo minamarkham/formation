@@ -33,5 +33,3 @@ function setTheme() {
 themeTrigger.addEventListener('click', () => {
 	setTheme();
 });
-
-setTheme();
