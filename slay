@@ -74,8 +74,7 @@ chapter "Installing Dependencies…"
 # -----------------------------------------------------------------------------
 # XCode
 # -----------------------------------------------------------------------------
-if type xcode-select >&- && xpath=$( xcode-select --print-path ) &&
-	test -d "${xpath}" && test -x "${xpath}" ; then
+if command -v xcode-select &> /dev/null && xpath=$( xcode-select --print-path ) && test -d "${xpath}" && test -x "${xpath}"; then
 	print_success_muted "Xcode already installed. Skipping."
 else
 	step "Installing Xcode…"
@@ -226,29 +225,28 @@ if [ -e $cwd/swag/npm ]; then
 fi
 
 ###############################################################################
-# INSTALL: PHP 7.4
+# INSTALL: PHP 8
 ###############################################################################
-chapter "Installing PHP version 7.4…"
-if [[ ! $(php --version | grep "PHP 7.4") ]]; then
+chapter "Installing PHP version 8.2…"
+if [[ ! $(php --version | grep "PHP 8.2") ]]; then
   # Uninstall default PHP that ships with MacOS.
   if brew ls --versions php > /dev/null; then
     brew unlink php
   fi
 
-  echo_install "Installing php@7.4"
+  echo_install "Installing php@8.2"
   brew tap shivammathur/php
   brew install shivammathur/php/php@7.4 > /dev/null
-  brew install shivammathur/php/php@8.0 > /dev/null
-  brew install shivammathur/php/php@8.1 > /dev/null
   brew install shivammathur/php/php@8.2 > /dev/null
+  brew install shivammathur/php/php@8.3 > /dev/null
 
-  # Need to specify this, otherwise it just installs the default 7.3.29 that ships with Big Sur.
-  brew link --overwrite --force shivammathur/php/php@7.4 > /dev/null
-  export PATH="/usr/local/opt/php@7.4/bin:$PATH"
-  export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
-  print_success "php@7.4 installed!\n"
+  # Need to specify this, otherwise it just installs the default version that ships with MacOs.
+  brew link --overwrite --force shivammathur/php/php@8.2 > /dev/null
+  export PATH="/usr/local/opt/php@8.2/bin:$PATH"
+  export PATH="/usr/local/opt/php@8.2/sbin:$PATH"
+  print_success "php@8.2 installed!\n"
 else
-  print_success_muted "php@7.4 already installed. Skipped."
+  print_success_muted "php@8.2 already installed. Skipped."
 fi
 
 ###############################################################################
