@@ -1,15 +1,1 @@
-colortest::colortest
-cssstats-cli::cssstats
-@11ty/eleventy::eleventy
-eslint::eslint
-fast-cli::fast
-@frctl/fractal::fractal
-gatsby-cli::gatsby
-git-standup::git-standup
-gulp-cli::gulp
-hotel::hotel
-html-sketchapp-cli::html-sketchapp
-imageoptim-cli::imageOptim
-pa11y::pa11y
-parrotsay::parrotsay
 @vue/cli::vue
