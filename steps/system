@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+print_message "" blank
+print_message "sudo" banner
+
+ask_for_sudo() {
+	# If we already have sudo access, skip the password prompt
+	sudo -n true 2>/dev/null && {
+		print_message "password already cached" confirm
+		print_message "" blank
+		return
+	}
+
+	# Ask for the administrator password upfront
+	if ! sudo -v; then
+		print_message "Wrong password or sudo access denied. Exiting." error
+		exit 1
+	fi
+
+	# Keep-alive: update existing `sudo` time stamp until script has finished
+	while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+	print_message "Password cached" confirm
+	print_message "" blank
+}
+
+# Request & keep administrator privileges
+# -------------------------------------------------------------
+do_system() {
+	print_message "Caching password" step
+	ask_for_sudo;
+}
+
+do_system

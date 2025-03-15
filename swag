@@ -1,0 +1,239 @@
+#!/usr/bin/env zsh
+
+# ~/swag : formation customizations
+# =============================================================================
+SLAY_BREWFILE="$HOME/Brewfile"
+HOTSAUCE="$HOME/@Projects/!wip/deja-vu/dotfiles/.hot-sauce"
+# HOTSAUCE="$HOME/.hot-sauce"
+
+# HOMEBREW: Casks: Applications installed via Homebrew Cask.
+# -------------------------------------------------------------
+CASKS=(
+	'1password'
+	'airtable'
+	'backblaze'
+	'bartender'
+	'chatgpt'
+	'cleanmymac'
+	'discord'
+	'dropbox'
+	'fantastical'
+	'figma'
+	'firefox'
+	'fontbase'
+	'handbrake'
+	'hazel'
+	'httpie'
+	'hush'
+	'imageoptim'
+	'kaleidoscope'
+	'loop'
+	'notion'
+	'obsidian'
+	'plex'
+	'raindropio'
+	'raycast'
+	'spotify'
+	'twingate'
+	'ubar'
+	'visual-studio-code'
+	'warp'
+	'zoom'
+)
+
+# HOMEBREW: Formulae: Command line tools installed via Homebrew.
+# -------------------------------------------------------------
+FORMULAE=(
+	'asciinema'
+	'chezmoi'
+	'eza'
+	'ffmpeg'
+	'fileicon'
+	'flyctl'
+	'git'
+	'httpie'
+	'jq'
+	'lazygit'
+	'mas'
+	'micro'
+	'starship'
+	'tig'
+	'vhs'
+	'watchman'
+	'wget'
+	'zoxide'
+)
+
+# NPM: Global Node packages to be installed via NPM.
+# -------------------------------------------------------------
+NPMPACKAGES=(
+	'corepack'
+	'sass-migrator'
+	'netlify-cli'
+)
+
+# VSCODE: Extensions
+# -------------------------------------------------------------
+VSCODE=(
+	'aaron-bond.better-comments'
+	'adam-bender.commit-message-editor'
+	'alexcvzz.vscode-sqlite'
+	'anseki.vscode-color'
+	'bernardop.working-sets'
+	'bierner.color-info'
+	'bierner.emojisense'
+	'bierner.markdown-emoji'
+	'burkeholland.simple-react-snippets'
+	'cduruk.thrift'
+	'christian-kohler.path-intellisense'
+	'chrmarti.regex'
+	'dbaeumer.vscode-eslint'
+	'devangtomar.vscode-diverse-dye'
+	'dsznajder.es7-react-js-snippets'
+	'eamodio.gitlens'
+	'esbenp.prettier-vscode'
+	'evan-buss.font-switcher'
+	'expo.vscode-expo-tools'
+	'fayras.simple-new-file'
+	'folke.vscode-monorepo-workspace'
+	'fooxly.workspace'
+	'formulahendry.auto-close-tag'
+	'formulahendry.auto-rename-tag'
+	'ginfuru.better-nunjucks'
+	'github.copilot'
+	'github.copilot-chat'
+	'jannisx11.batch-rename-extension'
+	'jock.svg'
+	'jrebocho.vscode-random'
+	'lordbrom.highlight-duplicates'
+	'miclo.sort-typescript-imports'
+	'mike-co.import-sorter'
+	'minamarkham.yonce-theme'
+	'mrmlnc.vscode-duplicate'
+	'ms-azuretools.vscode-docker'
+	'ms-vscode-remote.remote-containers'
+	'ms-vscode-remote.remote-ssh'
+	'ms-vscode-remote.remote-ssh-edit'
+	'ms-vscode-remote.remote-wsl'
+	'ms-vscode-remote.vscode-remote-extensionpack'
+	'ms-vscode.remote-explorer'
+	'ms-vsliveshare.vsliveshare'
+	'naumovs.color-highlight'
+	'nhoizey.gremlins'
+	'pflannery.vscode-versionlens'
+	'pkief.material-icon-theme'
+	'pnp.polacode'
+	'pranayagarwal.vscode-hack'
+	'randomfractalsinc.snippets-viewer'
+	'redhat.vscode-yaml'
+	'ronnidc.nunjucks'
+	'samverschueren.final-newline'
+	'shardulm94.trailing-spaces'
+	'sirtori.indenticator'
+	'stylelint.vscode-stylelint'
+	'tahabasri.snippets'
+	'talhabalaj.actual-font-changer'
+	'tamasfe.even-better-toml'
+	'tombonnike.vscode-status-bar-format-toggle'
+	'urbantrout.refactor-css'
+	'usernamehw.errorlens'
+	'vincaslt.highlight-matching-tag'
+	'visualstudioexptteam.intellicode-api-usage-examples'
+	'visualstudioexptteam.vscodeintellicode'
+	'vitaliymaz.vscode-svg-previewer'
+	'vivaxy.vscode-conventional-commits'
+	'wayou.vscode-todo-highlight'
+	'xabikos.javascriptsnippets'
+	'zhucy.project-tree'
+)
+
+# App Store Apps: app IDs to install via `mas`
+# -------------------------------------------------------------
+APPSTORE=(
+	1616831348  # Affinity Designer 2
+	1616822987  # Affinity Photo 2
+	918858936   # Airmail
+	953286746   # Darkroom
+	# 486626129   # Folder Tidy
+	400169658   # Friendly Social
+	6443906359  # Friendly Shopping
+	553245401   # Friendly Streaming
+	1090488118  # Gemini 2
+	992115977   # Image2icon
+	1303222628  # Paprika Recipe Manager 3
+	1518036000  # Sequel Ace
+	1449415412  # TinyNotepad
+)
+
+# macOS system preferences
+# -------------------------------------------------------------
+SETTINGS=(
+	# Disabling natural scrolling
+	"defaults write -g com.apple.swipescrolldirection -bool false"
+	# Finder: Show hidden files by default
+	"defaults write com.apple.finder AppleShowAllFiles -bool true"
+	# Finder: Show all filename extensions
+	"defaults write com.apple.finder AppleShowAllExtensions -bool true"
+	# Finder: Show path bar
+	"defaults write com.apple.finder ShowPathbar -bool true"
+	# Shows the status bar in Finder
+	"defaults write com.apple.finder ShowStatusBar -bool true"
+	# Sets the preferred view style in Finder to list view
+	"defaults write com.apple.finder FXPreferredViewStyle -string 'Nlsv'"
+	# Use current directory as default search scope in Finder
+	"defaults write com.apple.finder FXDefaultSearchScope -string 'SCcf'"
+	# Makes new Finder windows open in the home directory
+	"defaults write com.apple.finder NewWindowTarget -string 'PfHm'"
+	# Disable the warning when changing a file extension
+	"defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false"
+	# Don't create .DS_Store Files On Network Or USB Volumes
+	"defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true"
+	"defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true"
+	# Dock: Auto-hide
+	"defaults write com.apple.dock autohide -bool true"
+	# Setting Dock position (right)
+	"defaults write com.apple.dock orientation -string 'right'"
+	# Setting Dock size (small)
+	"defaults write com.apple.dock tilesize -int 36"
+	# Disabling Dock magnification
+	"defaults write com.apple.dock magnification -bool false"
+	# Disabling animation when opening applications
+	"defaults write com.apple.dock launchanim -bool false"
+	# Hiding open app indicators in the Dock
+	"defaults write com.apple.dock show-process-indicators -bool false"
+	# Hiding suggestions and recent apps in the Dock
+	"defaults write com.apple.dock show-recents -bool false"
+	# Setting Bottom Left Hot Corner to start screensaver
+	"defaults write com.apple.dock wvous-bl-corner -int 5"
+	"defaults write com.apple.dock wvous-bl-modifier -int 0"
+	# Setting Bottom Right Hot Corner to disable screensaver
+	"defaults write com.apple.dock wvous-br-corner -int 6"
+	"defaults write com.apple.dock wvous-br-modifier -int 0"
+	# Set screenshot file type
+	"defaults write com.apple.screencapture type jpg"
+	# Set screenshot location
+	"defaults write com.apple.screencapture location \"$SLAY_SCREENSHOTS\""
+	# Save to disk (not to iCloud) by default
+	"defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false"
+	# Automatically quit printer app once print jobs complete
+	"defaults write com.apple.print.PrintingPrefs 'Quit When Finished' -bool true"
+	# Enable FileVault for full-disk encryption
+	"fdesetup enable"
+	# Checking if FileVault is enabled
+	"fdesetup status"
+	# Show the ~/Library folder in Finder
+	"chflags nohidden ~/Library"
+	# Disabling Apple Search Suggestions in Spotlight
+	"defaults write com.apple.Spotlight SuggestionsEnabled -bool false"
+	# Disabling Apple Intelligence & Siri
+	"defaults write com.apple.assistant.support 'Assistant Enabled' -bool false"
+	"defaults write com.apple.assistant.backedup 'Siri Data Sharing Opt-In Status' -bool false"
+	# Disabling Apple Advertising tracking
+	"defaults write com.apple.AdLib forceLimitAdTracking -bool true"
+	# Disabling look up & data detectors
+	"defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerTapGesture -int 0"
+	# Disable the 'Are you sure you want to open this application?' dialog
+	"defaults write com.apple.LaunchServices LSQuarantine -bool false"
+	# Set alert sound to 'Submarine / Submerge'
+	"defaults write NSGlobalDomain com.apple.sound.beep.sound -string '/System/Library/Sounds/Submarine.aiff'"
+)

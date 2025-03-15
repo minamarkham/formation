@@ -1,0 +1,42 @@
+#!/usr/bin/env zsh
+
+print_message "NVM & Node" banner
+
+install_nvm_node() {
+	print_message "Checking Node" step
+	if [ -x nvm ]; then
+		curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+		nvm install node
+		nvm use node
+		nvm run node --version
+		nodev=$(node -v)
+		print_message "Node $nodev installed!" confirm
+		print_message "" blank
+	else
+		nodev=$(node -v)
+		print_message "Using Node $nodev!" confirm
+		print_message "" blank
+	fi
+}
+
+install_npm_packages() {
+	print_message "Installing global npm packages" step
+	for pkg in ${NPMPACKAGES[@]}; do
+		if [[ $(cli_is_installed $pkg) == 0 ]]; then
+			npm install $pkg -g --silent
+			print_message "$pkg installed!" confirm
+		else
+			print_message "✓  $pkg already installed. Skipping." muted
+		fi
+	done
+	print_message "" blank
+}
+
+# do it
+# -------------------------------------------------------------
+do_node() {
+	install_nvm_node;
+	install_npm_packages;
+}
+
+do_node

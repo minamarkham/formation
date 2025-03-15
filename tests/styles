@@ -1,0 +1,84 @@
+#!/usr/bin/env zsh
+
+# -------------------------------------------------------------	#
+#  Usage Instructions                                           #
+#  Run this script: chmod +x tests/styles && tests/styles       #
+# -------------------------------------------------------------	#
+
+SLAY_DIR="$(cd "$(dirname "$0")" && pwd)"
+PARENT_DIR="$(dirname "$SLAY_DIR")"
+
+# twirl on your haters
+# -------------------------------------------------------------
+source $PARENT_DIR/twirl > /dev/null
+
+# Ensure associative arrays work in Zsh
+autoload -U colors && colors
+
+# Styles
+typeset -A styles=(
+  "0"  "Reset"
+  "1"  "Bold, reset with 22"
+  "2"  "Dim reset with 22"
+  "3"  "Italic, reset with 23"
+  "4"  "Underline, reset with 24"
+  "5"  "Blink (Slow), reset with 25"
+  "7"  "Reverse, reset with 27"
+  "8"  "Hidden, \033[28mreset with 28"
+  "9"  "Strikethrough, reset with 29"
+)
+
+# Foreground colors
+typeset -A fg_colors=(
+  "30" "Black"
+  "31" "Red"
+  "32" "Green"
+  "33" "Yellow"
+  "34" "Blue"
+  "35" "Magenta"
+  "36" "Cyan"
+  "37" "White"
+)
+
+# Background colors
+typeset -A bg_colors=(
+  "40" "Black"
+  "41" "Red"
+  "42" "Green"
+  "43" "Yellow"
+  "44" "Blue"
+  "45" "Magenta"
+  "46" "Cyan"
+  "47" "White"
+)
+
+# Print styles
+# -------------------------------------------------------------
+print_message "Styles" title
+for code in ${(k)styles}; do
+  echo -e "$INDENT$INDENT\033[${code}m${styles[$code]}\033[0m (Code: ${code})"
+done
+
+# Print foreground colors
+# -------------------------------------------------------------
+print_message "" blank
+print_message "Foreground Colors" title
+for code in ${(k)fg_colors}; do
+  echo -e "$INDENT$INDENT\033[${code}m${fg_colors[$code]}\033[0m (Code: ${code})"
+done
+
+# Print background colors
+# -------------------------------------------------------------
+print_message "" blank
+print_message "Background Colors" title
+for code in ${(k)bg_colors}; do
+  echo -e "$INDENT$INDENT\033[${code}m ${bg_colors[$code]} \033[0m (Code: ${code})"
+done
+
+# Combination examples
+# -------------------------------------------------------------
+print_message "" blank
+print_message "Examples of Combining Styles and Colors" title
+echo -e "$INDENT$INDENT\033[1;31mBold Red Text\033[0m"
+echo -e "$INDENT$INDENT\033[3;34mItalic Blue Text\033[0m"
+echo -e "$INDENT$INDENT\033[4;46;37mWhite Text on Cyan Background\033[0m"

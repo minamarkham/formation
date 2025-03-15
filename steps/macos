@@ -1,0 +1,61 @@
+#!/usr/bin/env zsh
+
+ask_for_directory() {
+	local screenshot_dir="$HOME/Desktop"
+
+	while true; do
+		# Prompt the user with the default directory suggestion
+		echo -en "${RESET}${INDENT} Where to save screenshots? [default: $screenshot_dir]: ${PURPLE}"
+		read -r input_dir
+		echo -en "${RESET}"
+
+		# Use default if input is empty
+		[[ -z "$input_dir" ]] && input_dir="$screenshot_dir"
+
+		# Expand ~ to full home directory path
+		input_dir="${input_dir/#\~/$HOME}"
+
+		# Check if the directory exists, if not, create it
+		if [[ -d "$input_dir" ]]; then
+			print_message "✓  Directory already exists: $input_dir" muted
+		else
+			print_message "✓  Directory does not exist. Creating: $input_dir" muted
+			mkdir -p "$input_dir"
+			print_message "Directory created successfully." confirm
+		fi
+
+		SLAY_SCREENSHOTS="$input_dir"
+		print_message "\$SLAY_SCREENSHOTS using $SLAY_SCREENSHOTS" confirm
+		break
+	done
+}
+
+configure_settings() {
+	print_message "Configuring default settings" step
+	ask_for_directory;
+	for setting in ${SETTINGS[@]}; do
+		eval $setting
+	done
+	print_message "Settings configured!" confirm
+}
+
+# System Cleanup & Final Steps
+restart_apps() {
+	print_message "" blank
+	print_message "Restarting affected apps" step
+	for app in "Finder" "Dock" "SystemUIServer"; do
+		killall "$app" &> /dev/null
+	done
+	print_message "Restarted!" confirm
+	print_message "" blank
+}
+
+# Set macOS system settings
+# -------------------------------------------------------------
+do_macos() {
+	print_message "macOS settings" banner
+	configure_settings;
+	restart_apps;
+}
+
+do_macos

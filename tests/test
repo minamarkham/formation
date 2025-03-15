@@ -1,0 +1,213 @@
+#!/usr/bin/env zsh
+
+# -------------------------------------------------------------	#
+#  Usage Instructions                                           #
+#  Run this script: chmod +x tests/test && tests/test           #
+# -------------------------------------------------------------	#
+
+SLAY_DIR="$(cd "$(dirname "$0")" && pwd)"
+PARENT_DIR="$(dirname "$SLAY_DIR")"
+
+# twirl on your haters
+# -------------------------------------------------------------
+source $PARENT_DIR/twirl > /dev/null
+
+# create assets needed for testing purposes
+create_test_files() {
+	local testDir="tests/test_dmg_content"
+	local dmgPath="$HOME/Downloads/TestApp.dmg"
+	local zipPath="$HOME/Downloads/test.zip"
+	local appName="TestApp.app"
+
+	# Clean up previous test content if any
+	rm -rf "$testDir"
+	mkdir -p "$testDir/$appName/Contents/MacOS"
+
+	# Create a dummy executable file inside the .app
+	echo "#!/bin/zsh\necho 'Dummy TestApp launched.'" > "$testDir/$appName/Contents/MacOS/TestApp"
+	chmod +x "$testDir/$appName/Contents/MacOS/TestApp"
+
+	# Create minimal Info.plist for realism
+	cat << EOF > "$testDir/$appName/Contents/Info.plist"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+	"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleName</key>
+	<string>TestApp</string>
+	<key>CFBundleExecutable</key>
+	<string>TestApp</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.example.testapp</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+</dict>
+</plist>
+EOF
+
+	# Create the DMG file from the contents folder
+	hdiutil create -volname "TestApp" -srcfolder "$testDir" -ov -format UDZO "$dmgPath" &>/dev/null
+
+	# Create a .zip file with a test.txt file inside
+	echo "This is a test file." > "$testDir/test.txt"
+	(cd "$testDir" && zip -qj "$zipPath" test.txt)
+}
+
+# cleanup assets created for testing purposes
+cleanup_test_files() {
+	rm $HOME/Downloads/TestApp.dmg
+	rm -rf /Applications/TestApp.app
+	rm -rf tests/test_dir
+	rm -rf tests/test_dmg_content
+	rm $HOME/Downloads/test.zip
+	rm $HOME/Downloads/test.txt
+	rm $HOME/Downloads/example.html
+}
+
+# create test files
+# -------------------------------------------------------------
+print_message "" blank
+print_message "➤  Creating test files" muted
+create_test_files
+print_message "Created test files" confirm
+
+# start testing
+# -------------------------------------------------------------
+print_message "" blank
+print_message "Testing text formatting" banner
+
+# 1. Test print_message
+print_message "This is a normal note without formatting" note
+print_message "✦ ✧ ⦿ ◉ ▶︎ ➤ ✢ ✣ ✤ ✻ ✼ ✱ ❇︎ ✶ ℹ︎ ⚑ ⚐ ✓ ✔︎ ✕ ✖︎ ✗ ✘ ❤︎ ❥" note
+print_message "" blank
+
+print_message "✓  App already installed. Skipping." muted
+print_message "Installation completed successfully" confirm
+print_message "Error: Unable to connect to the server" error
+print_message "Warning: Low disk space on server" warning
+
+print_message "Installing Homebrew" step
+print_message "Success! Your changes have been saved" success
+print_message "Deployment failed! Please check logs" fail
+print_message "Fetching latest updates from API" info
+print_message "Do you want to continue? (y/n)" question
+print_message "Refactor the database connection logic" todo
+print_message "System shutting down!" critical
+print_message "Did nothing" sparkles
+
+print_message "Testing logging and message functions" "banner"
+
+# 2. Test log_message
+log_message "Test command" "1" "Sample error message"
+
+# 3. Test run_command
+print_message "Test run_command" title
+run_command "sleep 2"
+run_command "ls -l /nonexistent" # deliberately fails to test logging
+
+print_message "" blank
+print_message "Testing check functions" "banner"
+
+# 4. Test check_if_not_empty
+print_message "check_if_not_empty" title
+if check_if_not_empty "sample"; then
+	print_message "check_if_not_empty passed" "confirm"
+else
+	print_message "check_if_not_empty failed" "fail"
+fi
+
+if ! check_if_not_empty ""; then
+	print_message "check_if_not_empty correctly failed on empty input" "confirm"
+	print_message "" blank
+fi
+
+# 5. Test check_if_file_exists
+print_message "check_if_file_exists" title
+if check_if_file_exists "tests/test"; then
+	print_message "check_if_file_exists passed" "confirm"
+	print_message "" blank
+fi
+
+# 6. Test check_if_xcode_installed
+print_message "check_if_xcode_installed" title
+if check_if_xcode_installed; then
+	print_message "Xcode CLI Tools are installed." "confirm"
+	print_message "" blank
+else
+	print_message "Xcode CLI Tools are NOT installed." "warning"
+	print_message "" blank
+fi
+
+# 7. Test check_if_app_store_authenticated
+print_message "check_if_app_store_authenticated" title
+if check_if_app_store_authenticated; then
+	print_message "Authenticated to App Store." "confirm"
+	print_message "" blank
+else
+	print_message "Not authenticated to App Store." "warning"
+	print_message "" blank
+fi
+
+# 8. Test get_username
+print_message "get_username" title
+username=$(get_username)
+print_message "${INDENT}Current Username: $username" "note"
+print_message "" blank
+
+# 9. Test check_if_user_is_admin
+print_message "check_if_user_is_admin" title
+if check_if_user_is_admin; then
+	print_message "User is admin." "confirm"
+else
+	print_message "User is not admin." "error"
+fi
+
+print_message "" blank
+print_message "Testing file operations" "banner"
+
+# 10. Test download_from_url
+print_message "download_from_url" title
+download_from_url "https://www.example.com" "example.html"
+
+# 11. Test unzip_file
+# Requires a sample zip file at ~/Downloads/test.zip for proper testing
+print_message "unzip_file" title
+unzip_file "test.zip"
+
+# 12. Test unmount_file
+# Requires a valid DMG named TestApp.dmg in ~/Downloads for proper testing
+print_message "unmount_file" title
+unmount_file "TestApp.dmg" "TestApp"
+
+# 13. Test move_application
+# Requires an application named TestApp.app in ~/Downloads
+print_message "move_application" title
+move_application "TestApp.app"
+
+# 14. Test mkd
+print_message "mkd" title
+mkd tests/test_dir
+mkd tests/test_dir  # Re-run to test existing directory logic
+
+# 15. Test cli_is_installed
+print_message "" blank
+print_message "cli_is_installed" title
+if [ "$(cli_is_installed zsh)" -eq 1 ]; then
+	print_message "zsh is installed." "confirm"
+else
+	print_message "zsh is NOT installed." "error"
+fi
+
+if [ "$(cli_is_installed nonexistentcli)" -eq 0 ]; then
+	print_message "Correctly detected nonexistent CLI tool." "confirm"
+fi
+
+# cleanup test files
+# -------------------------------------------------------------
+print_message "" blank
+print_message "➤  Cleaning test files" muted
+cleanup_test_files
+print_message "Cleaned test files" confirm

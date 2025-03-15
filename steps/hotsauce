@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+
+# TWIRL & SWAG: load utility functions persistently
+# -------------------------------------------------------------
+source $SLAY_DIR/twirl > /dev/null
+source $SLAY_DIR/swag > /dev/null
+
+# do it
+# -------------------------------------------------------------
+add_hotsauce() {
+	print_message "Adding hot sauce" banner
+	if [ -f "$HOTSAUCE" ]; then
+		source $HOTSAUCE
+		print_message "" blank
+		print_message "You got hot sauce in your bag. 🔥 ${bold}Swag.${normal}" sparkles
+	else
+		print_message "" blank
+		print_message "No ~/.hot-sauce found. Skipping." warning
+	fi
+}
+
+add_hotsauce

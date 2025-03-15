@@ -1,0 +1,249 @@
+#!/usr/bin/env zsh
+
+# ./brew
+# =============================================================================
+# thanks: https://github.com/izzygomez/mac-setup/blob/main/brew-installs.sh
+
+# INSTALL: Homebrew
+# -----------------------------------------------------------------------------
+install_homebrew() {
+	if ! command -v brew &>/dev/null; then
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+		# Immediately evaluate the Homebrew environment settings for the current session
+		eval "$(/opt/homebrew/bin/brew shellenv)"
+		print_message "Homebrew installed!" confirm
+	else
+		print_message "✓  Homebrew already installed. Skipping." muted
+		print_message "" blank
+	fi
+}
+
+check_brew_cask() {
+	if brew list | grep -Fq brew-cask; then
+		brew uninstall --force brew-cask
+		print_message "Deprecated Homebrew-Cask uninstalled!" confirm
+	fi
+}
+
+# UPDATE: Homebrew
+# -------------------------------------------------------------
+update_homebrew() {
+	print_message "Updating Homebrew" step
+	run_command "brew update"
+	run_command "brew upgrade"
+	run_command "brew doctor"
+	print_message "" blank
+}
+
+# CHECK: brews
+# -----------------------------------------------------------------------------
+check_homebrew() {
+	print_message "Checking Homebrew" step
+	install_homebrew;
+	check_brew_cask;
+	update_homebrew;
+}
+
+# INSTALL: brews
+# -----------------------------------------------------------------------------
+install_brews() {
+	print_message "Installing Homebrew formulae" step
+	# Check for Brewfile in the current directory and use it if present
+	if [ -f "./Brewfile" ]; then
+		print_message "Brewfile found. Using it to install packages." title
+		brew bundle
+		print_message "✓  Installation from Brewfile complete!" muted
+	else
+		# if not, use defaults
+		print_message "✓  No Brewfile found. Using default installation." muted
+		print_message "" blank
+		check_brews;
+		check_casks;
+		check_apps;
+		check_vscode;
+	fi
+}
+
+# INSTALL: brews
+# -----------------------------------------------------------------------------
+package=""
+packages_installed=()
+
+install_package() {
+	# Doing this because `brew list` is too slow.
+	if ! [[ -d "$(brew --cellar)/$package" ]]; then
+		run_command "brew install ${package}"
+		packages_installed+=($package)
+	fi
+}
+
+check_brews() {
+	for p in ${FORMULAE[@]}; do
+		package=$p
+		install_package
+	done
+
+	if [[ $#packages_installed = 0 ]]; then
+		print_message "✓  No new formulae installed." muted
+		print_message "" blank
+	else
+		print_message "" blank
+		print_message "Newly installed formulae:" title
+		print_message "${INDENT}${packages_installed[*]}" note
+		print_message "" blank
+	fi
+
+	### Check packages
+	print_message "Checking Homebrew formulae" step
+	brew_leaves=($(brew leaves --installed-on-request))
+	installed_packages_not_in_install_list=()
+	for p in ${brew_leaves[@]}; do
+		if [[ ! "${packages_to_install[@]}" =~ "$p" ]]; then
+			installed_packages_not_in_install_list+=($p)
+		fi
+	done
+
+	if [[ -z "$installed_packages_not_in_install_list" ]]; then
+		print_message "${INDENT}All installed packages are in install list." note
+		print_message "" blank
+	else
+		print_message "Some packages have been installed locally that are not reflected in install list." warning "${INDENT}Consider adding to install list or uninstalling locally (brew uninstall \${package})"
+		print_message "${INDENT}${installed_packages_not_in_install_list[@]}" note
+		print_message "" blank
+	fi
+}
+
+# INSTALL: GUI Applications (Non-MAS)
+# -------------------------------------------------------------
+cask=""
+casks_installed=()
+
+install_cask() {
+	# Doing this because `brew list --cask` is too slow.
+	if ! [[ -d "$(brew --caskroom)/$cask" ]]; then
+		run_command "brew install --cask ${cask}"
+		casks_installed+=($cask)
+	fi
+}
+
+check_casks() {
+	### Install GUI Applications (Non-MAS) ###
+	print_message "Installing casks" step
+	for c in ${CASKS[@]}; do
+		cask=$c
+		install_cask
+	done
+
+	if [[ $#casks_installed = 0 ]]; then
+		print_message "" blank
+		print_message "✓  No new casks installed." muted
+		print_message "" blank
+	else
+		print_message "" blank
+		print_message "Newly installed casks" title
+		print_message "${INDENT}${casks_installed[*]}" note
+		print_message "" blank
+	fi
+
+	### Check casks
+	print_message "Checking Homebrew casks" step
+	brew_list_cask=($(brew list --cask))
+	installed_casks_not_in_install_list=()
+	for c in ${brew_list_cask[@]}; do
+		if [[ ! "${CASKS[@]}" =~ "$c" ]]; then
+			installed_casks_not_in_install_list+=($c)
+		fi
+	done
+
+	if [[ -z "$installed_casks_not_in_install_list" ]]; then
+		print_message "✓  All installed casks are in install list." muted
+		print_message "" blank
+	else
+		print_message "Some casks have been installed locally that are not reflected in install list." warning "   Consider adding to install list or uninstalling locally (brew uninstall --cask \${cask})"
+		print_message "${INDENT}${installed_casks_not_in_install_list[@]}" note
+		print_message "" blank
+	fi
+}
+
+# INSTALL: Mac App Store Apps
+# -------------------------------------------------------------
+app=""
+apps_installed=()
+
+install_app() {
+	if ! mas list | grep -q "$app"; then
+		run_command "mas install ${app}"
+		apps_installed+=($app)
+	fi
+}
+
+check_apps() {
+	print_message "Installing App Store apps" step
+	for a in ${APPSTORE[@]}; do
+		app=$a
+		install_app
+	done
+
+	if [[ $#apps_installed = 0 ]]; then
+		print_message "" blank
+		print_message "✓  No new apps installed." muted
+		print_message "" blank
+	else
+		print_message "" blank
+		print_message "Newly installed apps" title
+		print_message "${INDENT}${apps_installed[*]}" note
+		print_message "" blank
+	fi
+}
+
+# INSTALL: VSCode extensions
+# -------------------------------------------------------------
+extension=""
+extensions_installed=()
+
+install_extension() {
+	if ! code --list-extensions | grep -q "$extension"; then
+		run_command "code --install-extension ${extension}"
+		extensions_installed+=($extension)
+	fi
+}
+
+check_vscode() {
+	print_message "Installing VSCode extensions" step
+	for e in ${VSCODE[@]}; do
+		extension=$e
+		install_extension
+	done
+
+	if [[ $#extensions_installed = 0 ]]; then
+		print_message "" blank
+		print_message "✓  No new extensions installed." muted
+		print_message "" blank
+	else
+		print_message "" blank
+		print_message "Newly installed extensions" title
+		print_message "${INDENT}${extensions_installed[*]}" note
+		print_message "" blank
+	fi
+}
+
+# HOMEBREW: Cleanup (see https://docs.brew.sh/Manpage)
+# -----------------------------------------------------------------------------
+cleanup_homebrew() {
+	print_message "" blank
+	print_message "Cleaning up Homebrew" step
+	run_command "brew autoremove"
+	run_command "brew cleanup --prune=all -s"
+	print_message "" blank
+}
+
+# do it
+# -------------------------------------------------------------
+do_brew() {
+	print_message "Homebrew" banner
+	check_homebrew;
+	install_brews;
+	cleanup_homebrew;
+}
+
+do_brew

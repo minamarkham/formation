@@ -1,11 +1,31 @@
-# 🐝 Formation <a href="https://www.patreon.com/minamarkham"><img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="100"></a>
+<h1 align="center">
+    <a name="top" title="">~/.&nbsp;🐝</a><br/>formation<br/>
+    <sup><sub>made by  <a href="https://www.chezmoi.io/">mina</a>.</sub></sup>
+</h1>
 
-![Let's get in formation](assets/formation.gif)
-> Formation is a shell script to set up a macOS laptop for design and development.
+<div align="center">
 
-It can be run multiple times on the same machine safely. It installs, upgrades, or skips packages based on what is already installed on the machine.
+![Let's get in formation](./docs/formation.gif)
+<br/>
 
-## Install
+[![Codacy rating][badge-codacy]][link-codacy]
+[![CodeFactor rating][badge-codefactor]][link-codefactor]
+[![License][badge-license]][LICENSE]
+[![Repo analytics][badge-analytics]][link-analytics]
+
+<p>Formation is a shell script to set up a macOS laptop for design and development.</p>
+
+<p>It can be run multiple times on the same machine safely. It installs, upgrades, or skips packages based on what is already installed on the machine.</p>
+
+<p><strong>Be sure to <a href="#" title="star">⭐️</a> or <a href="#" title="fork">🔱</a> this repo if you find it useful! 😃</strong></p>
+</div>
+
+![Screenshot of macOS Scripted Setup in action](./docs/demo.png?raw=true)
+
+## prerequisites
+none. the script will install everything you need.
+
+## install
 
 Download the script:
 
@@ -22,200 +42,217 @@ less slay
 Slay:
 
 ```sh
-cd formation
-./slay 2>&1 | tee ~/slay.log
+cd formation && ./slay
 ```
-Just follow the prompts and you’ll be fine. 👌
 
-:warning: Warning: I advise against running [this script](slay) unless you understand what it’s doing to your computer.
+If you can't run the script, you might have to change its attributes. Just do:
 
-I created this based on my own preferences; your mileage may vary.
+```
+chmod +x ./slay
+```
 
-Once the script is done, quit and relaunch Terminal.
-
-It is highly recommended to run the script regularly to keep your computer up to date.
+:warning: Warning: I advise against running [this script](slay) unless you understand what it’s doing to your computer. I created this based on my own preferences; your mileage may vary. Once the script is done, quit and relaunch Terminal. It is highly recommended to run the script regularly to keep your computer up to date.
 
 Your last Formation run will be saved to `~/slay.log`. To review it, run `less ~/slay.log`.
 
 That's it! :sparkles:
 
-## What it sets up
+<div align="right">
+
+**[⬆ back to top](#top)**
+
+</div>
+
+## toolset
 The setup process will install:
 
-<details>
-<summary>Basic tools:</summary>
+### 🚀 productivity apps
+- [Airtable](https://airtable.com/) database management
+- [Bartender](https://www.macbartender.com/) menu bar organizer
+- [CleanMyMac](https://macpaw.com/cleanmymac) system optimizer & cleaner
+- [Fantastical](https://flexibits.com/fantastical) calendar app
+- [Loop](https://www.loop.app/) habit tracker & productivity manager
+- [Notion](https://www.notion.so/) notes & productivity platform
+- [Obsidian](https://obsidian.md/) markdown-based knowledge management
+- [Raycast](https://www.raycast.com/) quick launcher & productivity booster
 
-* [XCode Command Line Tools](https://developer.apple.com/xcode/downloads/) for developer essentials.
-* [Bash-it](https://github.com/Bash-it/bash-it/), for a more powerful bash.
-* [Git](https://git-scm.com/) for version control
-* [Homebrew](http://brew.sh/) for managing operating system libraries.
-</details>
+### 🛠 development apps
+- [ImageOptim](https://imageoptim.com/mac) image optimizer
+- [Kaleidoscope](https://www.kaleidoscopeapp.com/) diff tool
+- [Sequel Ace](https://sequel-ace.com/) SQL client
+- [Visual Studio Code](https://code.visualstudio.com/) IDE
+- [Warp](https://www.warp.dev/) modern terminal emulator
 
-<details>
-<summary>Package Managers:</summary>
+### 🎨 design apps
+- [Affinity Designer](https://affinity.serif.com/en-us/designer/)
+- [Affinity Photo](https://affinity.serif.com/en-us/photo/)
+- [Darkroom](https://darkroom.co/) photo editor
+- [Figma](https://www.figma.com/) interface design & prototyping tool
+- [FontBase](https://fontba.se/) font manager
+- [Image2icon](https://img2icnsapp.com/) icon generator
 
-* [NVM](https://github.com/creationix/nvm/) for managing and installing multiple versions of [Node.js](http://nodejs.org/) and [npm](https://www.npmjs.org/)
-* [Rbenv](https://github.com/sstephenson/rbenv) for managing versions of Ruby
-* [Yarn](https://yarnpkg.com/en/) for managing JavaScript packages
-</details>
+### 📢 communication apps
+- [Discord](https://discord.com/) community & voice chat
+- [Zoom](https://zoom.us/) video conferencing
 
-<details>
-<summary>CLI Tools & Utilities:</summary>
+### ⚙️ utility apps
+- [1Password](https://1password.com/) password manager
+- [Backblaze](https://www.backblaze.com/) cloud backup
+- [Dropbox](https://www.dropbox.com) cloud storage
+- [Hazel](https://www.noodlesoft.com/) automated file organizer
+- [Raindrop.io](https://raindrop.io/) bookmark manager
+- [Twingate](https://www.twingate.com/) secure remote access
 
-* [asciinema](https://asciinema.org/) for recording terminal sessions
-* [Gulp](https://gulpjs.com/) the streaming build system
-* [Hotel](https://github.com/typicode/hotel), a simple process manager for developers
-* [Hub](http://hub.github.com/) for interacting with the GitHub API
-* [hugo](https://gohugo.io/), an open-source static site generator
-* [ImageMagick](http://www.imagemagick.org/) to create, edit, compose, or convert bitmap images
-* [mas](https://github.com/mas-cli/mas) Mac App Store command line interface
-* [Tig](https://github.com/jonas/tig) text-mode interface for git
-* [Vagrant](https://www.vagrantup.com/) for development environments
-</details>
+### 🎭 multimedia apps
+- [HandBrake](https://handbrake.fr/) video transcoder
+- [Plex](https://www.plex.tv/) media server & streaming
+- [Spotify](https://www.spotify.com/) music streaming
 
-### Apps
+### 🌐 web browsers & extensions
+- [Firefox](https://www.mozilla.org/en-US/firefox/new/) alternative browser
+- [Hush](https://oblador.github.io/hush/) content blocker & privacy extension
 
-<details>
-<summary>Productivity</summary>
+### 🛒 shopping & social
+- [Friendly Shopping](https://friendly.io/shopping) shopping browser
+- [Friendly Social](https://friendly.io/social) social media app
+- [Friendly Streaming](https://friendly.io/streaming) streaming service client
 
-* [Airmail](http://airmailapp.com/) for a better mail client.
-* [Alfred](https://www.alfredapp.com/) for increased productivity and efficiency with macOS.
-* [Fantastical](https://flexibits.com/fantastical) for a better calendar.
-* [Things](https://culturedcode.com/things/) for getting things done.
-</details>
+### 🧑‍🍳 miscellaneous
+- [Gemini 2](https://macpaw.com/gemini) duplicate file finder
+- [Paprika Recipe Manager](https://www.paprikaapp.com/) recipe organizer
 
-<details>
-<summary>Development</summary>
+### 📦 cli & developer tools
+- [`asciinema`](https://asciinema.org/) terminal session recorder
+- [`chezmoi`](https://www.chezmoi.io/) dotfiles manager
+- [`eza`](https://github.com/eza-community/eza) enhanced `ls`
+- [`ffmpeg`](https://ffmpeg.org/) multimedia processor
+- [`flyctl`](https://fly.io/docs/flyctl/) Fly.io CLI tool
+- [`git`](https://git-scm.com/) distributed version control
+- [`httpie`](https://httpie.io/) HTTP client
+- [`jq`](https://stedolan.github.io/jq/) JSON processor
+- [`lazygit`](https://github.com/jesseduffield/lazygit) Git terminal UI
+- [`mas`](https://github.com/mas-cli/mas) Mac App Store CLI
+- [`micro`](https://micro-editor.github.io/) modern CLI text editor
+- [`starship`](https://starship.rs/) cross-shell prompt
+- [`tig`](https://jonas.github.io/tig/) text-based Git interface
+- [`vhs`](https://github.com/charmbracelet/vhs) CLI screencast creator
+- [`watchman`](https://facebook.github.io/watchman/) file watching service
+- [`wget`](https://www.gnu.org/software/wget/) file downloader
+- [`zoxide`](https://github.com/ajeetdsouza/zoxide) smarter `cd` command
 
-* [Dash](https://kapeli.com/dash) offline access to API documentation sets
-* [ForkLift](https://www.binarynights.com/forklift/) FTP client
-* [Hyper](https://hyper.is/) for an alternative terminal.
-* [ImageOptim](https://imageoptim.com/mac) for image optimization.
-* [iTerm](https://www.iterm2.com/) for a better terminal.
-* [Kaleidoscope](https://www.kaleidoscopeapp.com/) for a better diff tool.
-* [Virtual Box](https://www.virtualbox.org/) powerful virtualization tool
-* [Visual Studio Code](https://code.visualstudio.com/) IDE
-</details>
+### 📦 npm packages
+- [`corepack`](https://github.com/nodejs/corepack) package manager bootstrapper
+- [`netlify-cli`](https://github.com/netlify/cli) netlify cli tool
+- [`sass-migrator`](https://www.npmjs.com/package/sass-migrator) sass migration tool
 
-<details>
-<summary>Design</summary>
-
-* [Affinity Designer](https://affinity.serif.com/en-us/designer/)
-* [Affinity Photo](https://affinity.serif.com/en-us/photo/)
-* [Sip](http://sipapp.io/) collect, organize & share your colors
-* [Sketch](https://www.sketchapp.com/) for design.
-</details>
-
-<details>
-<summary>Communication</summary>
-
-* [Bear](http://www.bear-writer.com/) for writing and previewing markdown.
-* [Skype](https://www.skype.com/en/) for free calls to friends and family.
-* [Slack](https://slack.com/) where work happens.
-* [Ulysses](https://ulyssesapp.com/) for long-form writing.
-</details>
-
-<details>
-<summary>Utilities</summary>
-
-* [1Password](https://1password.com/) for password management.
-* [Dropbox](https://www.dropbox.com) for cloud file storage.
-* [Divvy](http://mizage.com/divvy/) for better window management.
-* [Encrypto](https://macpaw.com/encrypto) for securing files.
-* [ExpressVPN](https://www.expressvpn.com/) for privacy.
-* [HyperDock](https://bahoom.com/hyperdock/)
-* [Karabiner](https://pqrs.org/osx/karabiner/) for keyboard mapping.
-* [Renamer](https://renamer.com/) for easy file renaming.
-</details>
-
-<details>
-<summary>Miscellaneous</summary>
-
-* [Gifox](https://gifox.io/) for GIF making.
-* [Rocket](http://matthewpalmer.net/rocket/) for Slack-like emojis.
-* [Spotify](https://www.spotify.com/) for music.
-* [VLC](http://www.videolan.org/) for a better media player.
-</details>
-
-<details>
-<summary>Browsers</summary>
-
-* [Blisk](https://blisk.io/) for cross-device web development.
-* [Brave](https://brave.com/) for web browsing without ads.
-* [Chrome](https://www.google.com/chrome/browser/desktop/) for fast and free web browsing.
-* [Firefox](https://www.mozilla.org/en-US/firefox/new/) for web browsing and testing.
-* [TorBrowser](https://www.torproject.org/projects/torbrowser.html.en) for super secret web browsing.
-</details>
+### 🔌 vscode extensions *(selected highlights)*
+- [Yoncé](https://marketplace.visualstudio.com/items?itemName=minamarkham.yonce-theme) colorful, high-contrast color theme
+- [Material Icon Theme](https://marketplace.visualstudio.com/items?itemName=pkief.material-icon-theme) colorful icons
+- [Auto Close Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag) auto-close HTML/XML tags
+- [Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag) sync rename tags
+- [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) readable comments
+- [Color Highlight](https://marketplace.visualstudio.com/items?itemName=naumovs.color-highlight) inline color preview
+- [EmojiSense](https://marketplace.visualstudio.com/items?itemName=bierner.emojisense) emoji autocomplete
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) JS linting
+- [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=github.copilot) AI code assistant
+- [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) Git integration
+- [Gremlins](https://marketplace.visualstudio.com/items?itemName=nhoizey.gremlins) hidden character detection
+- [Highlight Matching Tag](https://marketplace.visualstudio.com/items?itemName=vincaslt.highlight-matching-tag) highlight paired tags
+- [Indenticator](https://marketplace.visualstudio.com/items?itemName=sirtori.indenticator) indentation visualization
+- [IntelliCode](https://marketplace.visualstudio.com/items?itemName=visualstudioexptteam.vscodeintellicode) AI autocomplete
+- [Markdown Emoji](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-emoji) emoji shortcuts
+- [Path Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense) auto-complete paths
+- [Polacode](https://marketplace.visualstudio.com/items?itemName=pnp.polacode) code screenshots
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) code formatter
+- [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint) css linting
+- [Trailing Spaces](https://marketplace.visualstudio.com/items?itemName=shardulm94.trailing-spaces) remove extra spaces
 
 <sub>See [`swag`](swag) for the full list of apps that will be installed. Adjust it to your personal taste.</sub>
 
 It should take less than 20 minutes to install (depends on your machine).
 
-## 🌶 Just add `~/.hot-sauce`
+<div align="right">
 
-![I got hot sauce in my bag](assets/hot-sauce.gif)
+**[⬆ back to top](#top)**
+
+</div>
+
+## `~/.hot-sauce` 🌶
+
+![I got hot sauce in my bag](./docs/hot-sauce.gif)
 
 Your `~/.hot-sauce` is added at the end of the Formation script. Put your customizations there.
 For example:
 
 ```sh
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-SETUP_ROOT=$HOME/.setup
+hotsauce() {
+  # Add your customizations here
+}
 
-NERDFONTS_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/ryanoasis/nerd-fonts/releases/latest)
-NERDFONTS_VERSION=$(get_github_version $NERDFONTS_RELEASE)
+# run command
+hotsauce
 
-DIRECTORIES=(
-    $HOME/Desktop/code
-    $HOME/Desktop/design
-    $HOME/Desktop/*dump
-    $HOME/Desktop/GIFs
-    $HOME/Desktop/projects
-    $HOME/Desktop/screenshots
-)
-
-NERDFONTS=(
-    SpaceMono
-    Hack
-    AnonymousPro
-    Inconsolata
-)
-
-step "Making directories…"
-for dir in ${DIRECTORIES[@]}; do
-    mkd $dir
-done
-
-step "Installing fonts…"
-for font in ${NERDFONTS[@]}; do
-    if [ ! -d ~/Library/Fonts/$font ]; then
-        printf "${indent}  [↓] $font "
-        wget -P ~/Library/Fonts https://github.com/ryanoasis/nerd-fonts/releases/download/$NERDFONTS_VERSION/$font.zip --quiet;unzip -q ~/Library/Fonts/$font -d ~/Library/Fonts/$font
-        print_in_green "${bold}✓ done!${normal}\n"
-    else
-        print_muted "${indent}✓ $font already installed. Skipped."
-    fi
-done
+exit 0
 ```
 
 Write your customizations such that they can be run safely more than once.
-See the `slay` script for examples.
+See the [`slay`](slay) script for examples.
 
-Formation functions such as `step` and `link` can be used in your `~/.hot-sauce`.
+Formation functions such as `step` and `log_message` can be used in your `~/.hot-sauce`.
 
-## Known Issues
+<div align="right">
+
+**[⬆ back to top](#top)**
+
+</div>
+
+## known issues
 Cask does not recognize applications installed outside of Homebrew Cask – in the case that the script fails, you can either remove the application from the install list or uninstall the application causing the failure and try again.
 
-## Acknowledgements
+<div align="right">
+
+**[⬆ back to top](#top)**
+
+</div>
+
+## acknowledgements
 
 Inspiration and code was taken from many sources, including:
 
-* [Mathias Bynens'](https://github.com/mathiasbynens) [dotfiles](https://github.com/mathiasbynens/dotfiles)
+* Mathias Bynens' [dotfiles](https://github.com/mathiasbynens/dotfiles)
 * thoughtbot's [laptop](https://github.com/thoughtbot/laptop/)
+* Swiss-Mac-User's [macOS Scripted Setup](https://github.com/Swiss-Mac-User/macOS-scripted-setup/)
+* Izzy Gomez's [brew installs](https://github.com/izzygomez/mac-setup/blob/main/brew-installs.sh)
 
-## 📜  License
+<div align="right">
+
+**[⬆ back to top](#top)**
+
+</div>
+
+## license
 
 Formation is customized for my own needs. It is free software, and may be redistributed under the terms specified in the [LICENSE] file.
 
+<div align="right">
+
+**[⬆ back to top](#top)**
+
+</div>
+
+<p align="center"><strong>Don't forget to <a href="#" title="star">⭐️</a> or <a href="#" title="fork">🔱</a> this repo! 😃<br/><sub>made with <b title="love">❤️</b> in oakland.</sub></strong></p>
+
+
+[badge-license]:https://img.shields.io/github/license/minamarkham/formation
 [LICENSE]: LICENSE
+
+[badge-analytics]:https://img.shields.io/badge/repo%20analytics-public-informational
+[link-analytics]:https://repo-analytics.github.io/minamarkham/formation
+
+[badge-codacy]:https://app.codacy.com/project/badge/Grade/30eb39e1eb414295bcc3713755d57b1a
+[link-codacy]:https://app.codacy.com/gh/minamarkham/formation/dashboard
+
+[badge-codefactor]:https://img.shields.io/codefactor/grade/github/minamarkham/formation?logo=codefactor&logoColor=white&cacheSeconds=300
+[link-codefactor]:https://www.codefactor.io/repository/github/minamarkham/formation

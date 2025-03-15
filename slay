@@ -1,228 +1,229 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-###############################################################################
-# ERROR: Let the user know if the script fails
-###############################################################################
+# -------------------------------------------------------------	#
+#  Usage Instructions                                           #
+#  Run this script: chmod +x ./slay && ./slay                   #
+# -------------------------------------------------------------	#
 
-trap 'ret=$?; test $ret -ne 0 && printf "\n   \e[31m\033[0m  Formation failed  \e[31m\033[0m\n" >&2; exit $ret' EXIT
+SLAY_DIR="$(cd "$(dirname "$0")" && pwd)" # Get full directory name of this script
 
-set -e
+# TWIRL & SWAG: load utility functions persistently
+# -------------------------------------------------------------
+source $SLAY_DIR/twirl > /dev/null
+source $SLAY_DIR/swag > /dev/null
 
-###############################################################################
-# TWIRL: Check for required functions file
-###############################################################################
+# STEP: Prerequisites
+# -------------------------------------------------------------
+do_system() {
+	source $SLAY_DIR/steps/system
+}
 
-if [ -e twirl ]; then
-	cd "$(dirname "${BASH_SOURCE[0]}")" \
-		&& . "twirl"
-else
-	printf "\n ⚠️  ./twirl not found  💃🏾 First, you need to twirl on your haters\n"
-	exit 1
-fi
+# STEP: Prerequisites
+# -------------------------------------------------------------
+do_deps() {
+	source $SLAY_DIR/steps/deps
+}
 
-###############################################################################
-# CHECK: Bash version
-###############################################################################
+# STEP: Set macOS preferences
+# -------------------------------------------------------------
+do_macos() {
+	need_restart=y;
+	source $SLAY_DIR/steps/macos
+}
 
-check_bash_version
+# STEP: Install NVM & Node
+# -------------------------------------------------------------
+do_node() {
+	source $SLAY_DIR/steps/node
+}
 
-###############################################################################
-# Get in Formation!          http://patorjk.com/software/taag/ ( font: Script )
-###############################################################################
+# STEP: Install apps via Homebrew
+# -------------------------------------------------------------
+do_homebrew() {
+	source $SLAY_DIR/steps/brew
+}
 
-printf "
-   _
-  | |
-  | |  __   ,_    _  _  _    __, _|_ 🍋  __   _  _
-  |/  /  \_/  |  / |/ |/ |  /  |  |  |  /  \_/ |/ |
-  |__/\__/    |_/  |  |  |_/\_/|_/|_/|_/\__/   |  |
-  |\  ---------------------------------------------
-  |/  Cause you slay           [for Bash 3.2 - 3.9]
-╭───────────────────────────────────────────────────╮
-│  Okay developers now let's get in ${bold}formation${normal}.      │
-│───────────────────────────────────────────────────│
-│  Safe to run multiple times on the same machine.  │
-│  It ${green}installs${reset}, ${blue}upgrades${reset}, or ${yellow}skips${reset} packages based   │
-│  on what is already installed on the machine.     │
-╰───────────────────────────────────────────────────╯
-   ${dim}$(get_os) $(get_os_version) ${normal} // ${dim}$BASH ${normal} // ${dim}$BASH_VERSION${reset}
-"
+# STEP: Hot Sauce
+# -------------------------------------------------------------
+add_hotsauce() {
+	source $SLAY_DIR/steps/hotsauce
+}
 
-###############################################################################
-# CHECK: Internet
-###############################################################################
-chapter "Checking internet connection…"
-check_internet_connection
+# DISPLAY: Notifications
+# -------------------------------------------------------------
+show_notices() {
+	if [[ $need_restart = y ]]; then
+		echo ""
+		print_message "Reboot your machine for all changes to take effect." emphasize
+		# Prompt user
+		printf "\n${INDENT}${PURPLE}Do you want to REBOOT? ${RESET}(y/N)"
 
-###############################################################################
-# PROMPT: Password
-###############################################################################
-chapter "Caching password…"
-ask_for_sudo
+		# Read a single key from the user
+		read -s -k 1 key
+		echo ""  # Move to a new line for better readability
 
-###############################################################################
-# PROMPT: SSH Key
-###############################################################################
-chapter 'Checking for SSH key…'
-ssh_key_setup
-
-###############################################################################
-# INSTALL: Dependencies
-###############################################################################
-chapter "Installing Dependencies…"
-
-# -----------------------------------------------------------------------------
-# XCode
-# -----------------------------------------------------------------------------
-if type xcode-select >&- && xpath=$( xcode-select --print-path ) &&
-	test -d "${xpath}" && test -x "${xpath}" ; then
-	print_success_muted "Xcode already installed. Skipping."
-else
-	step "Installing Xcode…"
-	xcode-select --install
-	print_success "Xcode installed!"
-fi
-
-if [ ! -d "$HOME/.bin/" ]; then
-	mkdir "$HOME/.bin"
-fi
-
-# -----------------------------------------------------------------------------
-# Bash-it
-# -----------------------------------------------------------------------------
-if [ -d "$HOME/.bash_it" ]; then
-	print_success_muted "Bash-it already installed. Skipping."
-else
-	step "Installing Bash-it…"
-	git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
-	~/.bash_it/install.sh --silent --no-modify-config
-	print_success "Bash-it installed!"
-fi
-
-# -----------------------------------------------------------------------------
-# NVM
-# -----------------------------------------------------------------------------
-if [ -x nvm ]; then
-	step "Installing NVM…"
-	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-	print_success "NVM installed!"
-	step "Installing latest Node…"
-	nvm install node
-	nvm use node
-	nvm run node --version
-	nodev=$(node -v)
-	print_success "Using Node $nodev!"
-else
-	print_success_muted "NVM/Node already installed. Skipping."
-fi
-
-# -----------------------------------------------------------------------------
-# Homebrew
-# -----------------------------------------------------------------------------
-if ! [ -x "$(command -v brew)" ]; then
-	step "Installing Homebrew…"
-	curl -fsS 'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
-	export PATH="/usr/local/bin:$PATH"
-	print_success "Homebrew installed!"
-else
-	print_success_muted "Homebrew already installed. Skipping."
-fi
-
-if brew list | grep -Fq brew-cask; then
-	step "Uninstalling old Homebrew-Cask…"
-	brew uninstall --force brew-cask
-	print_success "Homebrew-Cask uninstalled!"
-fi
-
-###############################################################################
-# INSTALL: brews
-###############################################################################
-if [ -e $cwd/swag/brews ]; then
-	chapter "Installing Homebrew formulae…"
-
-	for brew in $(<$cwd/swag/brews); do
-		install_brews $brew
-	done
-fi
-
-###############################################################################
-# UPDATE: Homebrew
-###############################################################################
-chapter "Updating Homebrew formulae…"
-brew update
-
-###############################################################################
-# INSTALL: casks
-###############################################################################
-if [ -e $cwd/swag/casks ]; then
-	chapter "Installing apps via Homebrew…"
-
-	for cask in $(<$cwd/swag/casks); do
-	    install_application_via_brew $cask
-	done
-fi
-
-###############################################################################
-# INSTALL: Mac App Store Apps
-###############################################################################
-chapter "Installing apps from App Store…"
-if [ -x mas ]; then
-
-	print_warning "Please install mas-cli first: brew mas. Skipping."
-
-	else
-
-	if [ -e $cwd/swag/apps ]; then
-		if mas_setup; then
-			# Workaround for associative array in Bash 3
-			# https://stackoverflow.com/questions/6047648/bash-4-associative-arrays-error-declare-a-invalid-option
-			for app in $(<$cwd/swag/apps); do
-				KEY="${app%%::*}"
-				VALUE="${app##*::}"
-				install_application_via_app_store $KEY $VALUE
-			done
+		# Check the user's input
+		if [[ "$key" == "y" || "$key" == "Y" ]]; then
+			echo "${INDENT}Rebooting…\n"
+			# sudo reboot
 		else
-			print_warning "Please signin to App Store first. Skipping."
+			echo "${INDENT}Reboot cancelled.\n"
+			exit 0
 		fi
 	fi
+}
 
-fi
+# STEP: Errthang
+# -------------------------------------------------------------
+do_errthang() {
+	do_system;
+	do_deps;
+	do_macos;
+	do_node;
+	do_homebrew;
+	add_hotsauce;
+}
 
-###############################################################################
-# CLEAN: Homebrew files
-###############################################################################
-chapter "Cleaning up Homebrew files…"
-brew cleanup 2> /dev/null
+# STEP: Exit
+# -------------------------------------------------------------
+do_nothing() {
+	echo -e "\n${INDENT} ✨ Did nothing ✨";
+	exit 0;
+}
 
-###############################################################################
-# INSTALL: npm packages
-###############################################################################
-if [ -e $cwd/swag/npm ]; then
-	chapter "Installing npm packages…"
-
-	for pkg in $(<$cwd/swag/npm); do
-		KEY="${pkg%%::*}"
-		VALUE="${pkg##*::}"
-		install_npm_packages $KEY $VALUE
-	done
-fi
-
-
-###############################################################################
-# OPTIONAL: Customizations
-###############################################################################
-chapter "Adding hot sauce…"
-if [ -f "$HOME/.hot-sauce" ]; then
-	if ask "Do you want to add hot sauce?" Y; then
-		. "$HOME/.hot-sauce"; printf "\n  You got hot sauce in your bag. 🔥 ${bold}Swag.${normal}\n";
+# notices
+# -------------------------------------------------------------
+cleanup() {
+	local exit_code=$?
+	if [ $exit_code -ne 0 ]; then
+		print_message "" blank
+		print_message "Formation failed! Please check logs." fail
 	else
-		print_success_muted "Hot sauce declined. Skipped.";
+		congrats
+		show_notices
 	fi
-else
-	print_warning "No ~/.hot-sauce found. Skipping."
-fi
+	exit $exit_code
+}
 
-###############################################################################
-# 🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋
-###############################################################################
-e_lemon_ated
+# DISPLAY: help menu
+# -------------------------------------------------------------
+show_help() {
+	echo ""
+	echo "   Usage: ./slay [OPTION]"
+	echo "   Available options:"
+	echo "   -h, --help      Show this message"
+	echo "   -a, --all       Setup everything"
+	echo "   -u, --update    Update macOS"
+	echo "   -i, --install   Install software"
+	echo "   -s, --hotsauce  Add hot sauce"
+}
+
+# DISPLAY: menu options
+# -------------------------------------------------------------
+show_menu() {
+	echo -e "${INDENT} ${BOLD}${UNDERLINE}Select options:${RESET}"
+
+	echo -en "${RESET}${INDENT} Setup Everything? (y/n): ${PURPLE}"
+	read -r setup_all
+
+	if [[ $setup_all == "y" ]]; then
+		do_errthang
+		return
+	fi
+
+	echo -en "${RESET}${INDENT} Update macOS? (y/n): ${PURPLE}"
+	read -r update_macos
+
+	echo -en "${RESET}${INDENT} Configure macOS? (y/n): ${PURPLE}"
+	read -r configure_macos
+
+	echo -en "${RESET}${INDENT} Install NVM/Node? (y/n): ${PURPLE}"
+	read -r install_node
+
+	echo -en "${RESET}${INDENT} Install Packages? (y/n): ${PURPLE}"
+	read -r install_packages
+
+	echo -en "${RESET}${INDENT} Add Hot Sauce? (y/n): ${PURPLE}"
+	read -r add_hotsauce
+
+	if [[ $update_macos == "y" || $configure_macos == "y" || $install_node == "y" || $install_packages == "y" || $add_hotsauce == "y" ]]; then
+		do_system
+	fi
+
+	[[ $update_macos == "y" ]] && do_deps
+	[[ $configure_macos == "y" ]] && do_macos
+	[[ $install_node == "y" ]] && do_node
+	[[ $install_packages == "y" ]] && do_homebrew
+	[[ $add_hotsauce == "y" ]] && add_hotsauce
+}
+
+slay() {
+	local command="$1"
+	local skip_welcome=false
+
+	# If the second parameter is "--skip", set skip_welcome to true
+	if [[ "$2" == "--skip" ]]; then
+		skip_welcome=true
+	fi
+
+	# Show welcome if no command provided
+	if [[ -z "$command" ]] && [[ "$skip_welcome" == false ]]; then
+		show_welcome
+	fi
+
+	case "$command" in
+		-h | --help | h | help) show_help; exit 0 ;;
+		-a | --all | a | all) [[ "$skip_welcome" == false ]] && show_welcome; do_errthang ;;
+		-u | --update | u | update) [[ "$skip_welcome" == false ]] && show_welcome; do_system; do_deps ;;
+		-i | --install | i | install) [[ "$skip_welcome" == false ]] && show_welcome; do_system; do_homebrew ;;
+		-s | --hotsauce | s | hotsauce) [[ "$skip_welcome" == false ]] && show_welcome; do_system; add_hotsauce ;;
+		*) show_menu ;;
+	esac
+}
+
+# welcome: http://patorjk.com/software/taag/ (font: Script)
+# -------------------------------------------------------------
+show_welcome() {
+	echo -n $PURPLE
+	echo "
+ _
+| |                                🍋
+| |  __   ,_    _  _  _    __, _|_     __   _  _
+|/  /  \_/  |  / |/ |/ |  /  |  |  |  /  \_/ |/ |
+|__/\__/    |_/  |  |  |_/\_/|_/|_/|_/\__/   |  |
+|\/
+|/  ${ITALIC}${UNDERLINE}cause you slay${RESET}.       ${DIM}made by mina for macos${RESET}.
+"
+	echo -n $RESET
+
+	# Prompt user for actions to take
+	echo "${INDENT} Okay $(whoami) now let's get in formation.\n"
+	echo "${INDENT} Safe to run multiple times on the same machine."
+	echo "${INDENT} It installs, upgrades, or skips packages based"
+	echo "${INDENT} on what is already installed on the machine."
+	echo $LINE_SEPARATOR
+}
+
+# 🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋
+# -------------------------------------------------------------
+congrats() {
+	echo "${INDENT}${DIM}─────────────────────────────────────────────────────${RESET}\n"
+	print_message "${BOLD}Congrats! You're in formation! 🍋${RESET}" success
+
+	printf "  ╭────────────────────────────────────────────────────╮
+  │ Thanks for using Formation!                        │
+  │ If you liked it, then you should put a star on it! │
+  │                                                    │
+  │ ${UNDERLINE}https://github.com/minamarkham/formation${RESET}           │
+  ╰────────────────────────────────────────────────────╯
+"
+
+}
+
+# cuz you slay <== this is the main command
+# -------------------------------------------------------------
+slay "$@"
+
+# clean up
+# -------------------------------------------------------------
+trap cleanup EXIT # Set trap to run cleanup when the script exits

@@ -1,0 +1,19 @@
+{
+  "name": "formation",
+  "version": "2.0.0",
+  "description": "macOS setup script for front-end development",
+  "homepage": "https://slay.sh",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/minamarkham/formation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/minamarkham/formation/issues"
+  },
+  "author": {
+    "name": "Mina Markham",
+    "email": "mina@mina.codes",
+    "url": "https://mina.codes"
+  },
+  "license": "MIT"
+}

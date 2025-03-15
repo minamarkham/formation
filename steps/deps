@@ -1,0 +1,134 @@
+#!/usr/bin/env zsh
+
+software_update() {
+	# List available updates and check if any exist
+	updates_available=$(softwareupdate --list 2>/dev/null | awk '/^\*/')
+
+	if [[ -z "$updates_available" ]]; then
+		print_message "✓  No updates available. Skipping." muted
+	else
+		softwareupdate --install --all
+		print_message "Software update completed!" confirm
+	fi
+
+	# Check if Rosetta is installed
+	if /usr/bin/pgrep oahd >/dev/null 2>&1; then
+		print_message "✓  Rosetta already installed. Skipping." muted
+	else
+		softwareupdate --install-rosetta --agree-to-license
+		print_message "Rosetta installed!" confirm
+	fi
+	print_message "" blank
+}
+
+# macOS to the latest version
+check_macos() {
+	print_message "Looking for updates" step
+	software_update
+}
+
+# Install Xcode Command Line Tools
+check_xcode() {
+	print_message "Setting up for development" step
+	if type xcode-select >&- && xpath=$( xcode-select --print-path ) &&
+		test -d "${xpath}" && test -x "${xpath}" ; then
+		print_message "✓  Xcode already installed. Skipping." muted
+		print_message "" blank
+	else
+		print_message "Installing Xcode" step
+		xcode-select --install
+		sudo xcodebuild -license accept
+		# Wait for installation to complete
+		until xcode-select -p &>/dev/null; do
+			 sleep 5
+		done
+		print_message "Xcode Command Line Tools installed!" confirm
+	fi
+}
+
+# Function to check and set Git config
+check_git_config() {
+	local key="$1"
+	local expected_value="$2"
+	local current_value
+
+	# Ensure Git operates in global mode, ignoring submodule context
+	export GIT_CONFIG_GLOBAL="$HOME/.gitconfig"
+	export GIT_DIR="$HOME/.git"  # Prevents Git from looking in submodule paths
+
+	# Get current Git config value, suppressing errors
+	current_value=$(git config --global --get "$key" 2>/dev/null || echo "")
+
+	# Check if the current value matches the expected value
+	if [[ "$current_value" == "$expected_value" ]]; then
+		print_message "✓  Git config '$key' is already set to '$expected_value'." muted
+	else
+		git config --global --replace-all "$key" "$expected_value"
+		print_message "Git config '$key' updated to '$expected_value'." confirm
+	fi
+}
+
+check_git() {
+	print_message "Setup git config" step
+
+	# Ensure Git is installed
+	if ! command -v git &>/dev/null; then
+		print_message "Git is not installed. Installing." error
+		brew install git
+		print_message "git installed!" confirm
+	fi
+}
+
+# Check if SSH keys exist in ~/.ssh/
+check_ssh_keys_in_home() {
+	local ssh_dir="$HOME/.ssh"
+	local ssh_keys=()
+
+	for key in id_rsa id_ed25519 id_ecdsa id_dsa; do
+		if [[ -f "$ssh_dir/$key" || -f "$ssh_dir/$key.pub" ]]; then
+			ssh_keys+=("$ssh_dir/$key")
+		fi
+	done
+
+	if [[ ${#ssh_keys[@]} -gt 0 ]]; then
+		print_message "SSH key(s) found in ~/.ssh/" confirm
+	else
+		print_message "No SSH key found in ~/.ssh/" error
+		print_message "" blank
+	fi
+}
+
+# Check if the SSH agent is running and has loaded keys
+check_ssh_agent() {
+	print_message "Checking SSH Agent" step
+	if [[ -n "$SSH_AUTH_SOCK" ]]; then
+		local ssh_agent_keys=$(ssh-add -l 2>/dev/null)
+		if [[ -n "$ssh_agent_keys" && "$ssh_agent_keys" != "The agent has no identities." ]]; then
+			print_message "SSH keys are loaded in SSH agent." confirm
+		else
+			print_message "SSH agent is running, but no keys are loaded." warning
+		fi
+	else
+		print_message "SSH agent is not running." error
+	fi
+	print_message "" blank
+}
+
+check_ssh_key() {
+	print_message "" blank
+	print_message "Checking SSH keys" step
+	check_ssh_keys_in_home
+	check_ssh_agent
+}
+
+# do it
+# -------------------------------------------------------------
+do_deps() {
+	print_message "System Dependencies" banner
+	check_macos;
+	check_xcode;
+	check_git;
+	check_ssh_key;
+}
+
+do_deps
