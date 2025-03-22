@@ -112,7 +112,7 @@ print_message() {
 		case "$type" in
 			note) echout="${INDENT}$message";;
 			confirm) echout="${INDENT}${GREEN}✓  $message${RESET}";;
-			muted) echout="${INDENT}${DIM}$message${RESET}";;
+			muted) echout="${INDENT}${RESET}${DIM}$message${RESET}";;
 			error) echout="${INDENT}${BOLD}${RED}✘  $message${RESET}";;
 			warning)
 				echo -e "${INDENT}${BRIGHT_YELLOW}⚑  $message${RESET}"
@@ -125,15 +125,34 @@ print_message() {
 			sparkles) echout="${INDENT}✨ ${RESET}$message${RESET} ✨\n";;
 			command) echout="${INDENT}${INDENT}${BOLD}running ${PURPLE}$message${RESET}";;
 			todo) echout="${INDENT}📝 ${YELLOW}${BOLD}TODO:${RESET} $message ${RESET}\n";;
-			inform) echout="${INDENT}✱  $message${RESET}\n";;
-			title) echout="${INDENT}✱  ${UNDERLINE}${BOLD}$message${RESET}";;
-			step) echout="${INDENT}▶︎  ${BOLD}$message${RESET}\n";;
+			inform) echout="${RESET}${INDENT}✱  $message${RESET}\n";;
+			title) echout="${RESET}${INDENT}✱  ${UNDERLINE}${BOLD}$message${RESET}";;
+			step) echout="${RESET}${INDENT}▶︎  ${BOLD}$message${RESET}\n";;
 			banner)
 				local len=${#message}
 				local border=$(printf '━%.0s' $(seq 1 $((len + 4))))  # Create a horizontal line
 				echo -e "${INDENT}${BOLD}${BLUE}┏${border}┓${RESET}"
 				echo -e "${INDENT}${BOLD}${BLUE}┃  ${WHITE}${message}  ${BLUE}┃${RESET}"
 				echo -e "${INDENT}${BOLD}${BLUE}┗${border}┛${RESET}";;
+			ask)
+				echo -en "${INDENT}❓ ${RESET}$message: "
+				read user_response
+				# If a variable name is provided, store response in it
+				if [ -n "$response_var" ]; then
+					eval "$response_var=\"$user_response\""
+				fi
+				return;;
+			yesno)
+				while true; do
+					echo -en "${INDENT}❓ ${RESET}$message (y/n): "
+					read -r user_response
+					case "$user_response" in
+						[Yy]*) eval "$response_var=true"; break;;
+						[Nn]*) eval "$response_var=false"; break;;
+						*) eval "$response_var=true"; break;;
+					esac
+				done
+				return;;
 			blank) echout="";;
 			*) echout="${INDENT}$message";;
 		esac
@@ -339,7 +358,7 @@ mkd() {
 	fi
 }
 
-# return 1 if global command line program installed, else 0
+# return 1 if npm package installed, else 0
 # -------------------------------------------------------------
 cli_is_installed() {
 	# set to 1 initially
@@ -348,4 +367,63 @@ cli_is_installed() {
 	type $1 >/dev/null 2>&1 || { local return_=0; }
 	# return value
 	echo "$return_"
+}
+
+# return 1 if an apt package is installed, else 0
+# -------------------------------------------------------------
+apt_is_installed() {
+	# set to 1 initially
+	local return_=1
+	# set to 0 if not found
+	dpkg -l | grep -qw "$1" || { local return_=0; }
+	# return value
+	echo "$return_"
+}
+
+# return 1 if a brew is installed, else 0
+# -------------------------------------------------------------
+brew_is_installed() {
+	# set to 1 initially
+	local return_=1
+	# set to 0 if not found
+	brew list --formula | grep -qw "$1" || { local return_=0; }
+	# return value
+	echo "$return_"
+}
+
+# return 1 if a cask is installed, else 0
+# -------------------------------------------------------------
+cask_is_installed() {
+	# set to 1 initially
+	local return_=1
+	# set to 0 if not found
+	brew list --cask | grep -qw "$1" || { local return_=0; }
+	# return value
+	echo "$return_"
+}
+
+# return 1 if a mas package is installed, else 0
+# -------------------------------------------------------------
+mas_is_installed() {
+	# set to 1 initially
+	local return_=1
+	# set to 0 if not found
+	mas list | awk '{print $1}' | grep -qw "$1" || { local return_=0; }
+	# return value
+	echo "$return_"
+}
+
+# check & install missing packages
+# usage: install_if_missing "wget" "brew_is_installed" "brew install"
+# -------------------------------------------------------------
+install_if_missing() {
+	local package="$1"
+	local install_cmd="$2"
+
+	if [[ $("$install_cmd" "$package") -eq 1 ]]; then
+		print_message "$package is already installed." "muted"
+	else
+		eval "$3 $package"
+		print_message "$package installed!" "confirm"
+	fi
 }

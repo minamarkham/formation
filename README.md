@@ -57,11 +57,7 @@ Your last Formation run will be saved to `~/slay.log`. To review it, run `less ~
 
 That's it! :sparkles:
 
-<div align="right">
-
-**[⬆ back to top](#top)**
-
-</div>
+<div align="right"><sup><a href="#top">⬆ back to top</a></sup></div>
 
 ## toolset
 The setup process will install:
@@ -171,11 +167,7 @@ The setup process will install:
 
 It should take less than 20 minutes to install (depends on your machine).
 
-<div align="right">
-
-**[⬆ back to top](#top)**
-
-</div>
+<div align="right"><sup><a href="#top">⬆ back to top</a></sup></div>
 
 ## `~/.hot-sauce` 🌶
 
@@ -202,20 +194,12 @@ See the [`slay`](slay) script for examples.
 
 Formation functions such as `step` and `log_message` can be used in your `~/.hot-sauce`.
 
-<div align="right">
-
-**[⬆ back to top](#top)**
-
-</div>
+<div align="right"><sup><a href="#top">⬆ back to top</a></sup></div>
 
 ## known issues
 Cask does not recognize applications installed outside of Homebrew Cask – in the case that the script fails, you can either remove the application from the install list or uninstall the application causing the failure and try again.
 
-<div align="right">
-
-**[⬆ back to top](#top)**
-
-</div>
+<div align="right"><sup><a href="#top">⬆ back to top</a></sup></div>
 
 ## acknowledgements
 
@@ -225,22 +209,15 @@ Inspiration and code was taken from many sources, including:
 * thoughtbot's [laptop](https://github.com/thoughtbot/laptop/)
 * Swiss-Mac-User's [macOS Scripted Setup](https://github.com/Swiss-Mac-User/macOS-scripted-setup/)
 * Izzy Gomez's [brew installs](https://github.com/izzygomez/mac-setup/blob/main/brew-installs.sh)
+* [macOS defaults](https://macos-defaults.com/) - Uncomplete list of macOS `defaults` commands with demos.
 
-<div align="right">
-
-**[⬆ back to top](#top)**
-
-</div>
+<div align="right"><sup><a href="#top">⬆ back to top</a></sup></div>
 
 ## license
 
 Formation is customized for my own needs. It is free software, and may be redistributed under the terms specified in the [LICENSE] file.
 
-<div align="right">
-
-**[⬆ back to top](#top)**
-
-</div>
+<div align="right"><sup><a href="#top">⬆ back to top</a></sup></div>
 
 <p align="center"><strong>Don't forget to <a href="#" title="star">⭐️</a> or <a href="#" title="fork">🔱</a> this repo! 😃<br/><sub>made with <b title="love">❤️</b> in oakland.</sub></strong></p>
 

@@ -1,10 +1,9 @@
 #!/usr/bin/env zsh
 
 # ~/swag : formation customizations
-# =============================================================================
+# =============================================================
 SLAY_BREWFILE="$HOME/Brewfile"
-HOTSAUCE="$HOME/@Projects/!wip/deja-vu/dotfiles/.hot-sauce"
-# HOTSAUCE="$HOME/.hot-sauce"
+HOTSAUCE="$HOME/.hot-sauce"
 
 # HOMEBREW: Casks: Applications installed via Homebrew Cask.
 # -------------------------------------------------------------
@@ -54,8 +53,10 @@ FORMULAE=(
 	'httpie'
 	'jq'
 	'lazygit'
+	'macchina'
 	'mas'
 	'micro'
+	'nerdfetch'
 	'starship'
 	'tig'
 	'vhs'

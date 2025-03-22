@@ -1,7 +1,6 @@
 # secrets and errors
 .env
 *.log
-npm-debug.log*
 
 # macOS related files
 .DS_Store

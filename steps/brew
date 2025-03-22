@@ -1,11 +1,10 @@
 #!/usr/bin/env zsh
 
 # ./brew
-# =============================================================================
-# thanks: https://github.com/izzygomez/mac-setup/blob/main/brew-installs.sh
+# =============================================================
 
 # INSTALL: Homebrew
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------
 install_homebrew() {
 	if ! command -v brew &>/dev/null; then
 		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -36,7 +35,7 @@ update_homebrew() {
 }
 
 # CHECK: brews
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------
 check_homebrew() {
 	print_message "Checking Homebrew" step
 	install_homebrew;
@@ -45,7 +44,7 @@ check_homebrew() {
 }
 
 # INSTALL: brews
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------
 install_brews() {
 	print_message "Installing Homebrew formulae" step
 	# Check for Brewfile in the current directory and use it if present
@@ -65,7 +64,7 @@ install_brews() {
 }
 
 # INSTALL: brews
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------
 package=""
 packages_installed=()
 
@@ -228,7 +227,7 @@ check_vscode() {
 }
 
 # HOMEBREW: Cleanup (see https://docs.brew.sh/Manpage)
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------
 cleanup_homebrew() {
 	print_message "" blank
 	print_message "Cleaning up Homebrew" step

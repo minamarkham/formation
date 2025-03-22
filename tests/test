@@ -24,7 +24,7 @@ create_test_files() {
 	mkdir -p "$testDir/$appName/Contents/MacOS"
 
 	# Create a dummy executable file inside the .app
-	echo "#!/bin/zsh\necho 'Dummy TestApp launched.'" > "$testDir/$appName/Contents/MacOS/TestApp"
+	echo "#!/usr/bin/env zsh\necho 'Dummy TestApp launched.'" > "$testDir/$appName/Contents/MacOS/TestApp"
 	chmod +x "$testDir/$appName/Contents/MacOS/TestApp"
 
 	# Create minimal Info.plist for realism
@@ -79,7 +79,7 @@ print_message "Created test files" confirm
 print_message "" blank
 print_message "Testing text formatting" banner
 
-# 1. Test print_message
+# Test print_message
 print_message "This is a normal note without formatting" note
 print_message "✦ ✧ ⦿ ◉ ▶︎ ➤ ✢ ✣ ✤ ✻ ✼ ✱ ❇︎ ✶ ℹ︎ ⚑ ⚐ ✓ ✔︎ ✕ ✖︎ ✗ ✘ ❤︎ ❥" note
 print_message "" blank
@@ -97,13 +97,15 @@ print_message "Do you want to continue? (y/n)" question
 print_message "Refactor the database connection logic" todo
 print_message "System shutting down!" critical
 print_message "Did nothing" sparkles
+# print_message "What is your name?" "ask" "" "name"
+# print_message "Do you want to continue?" "yesno" "" "user_choice"
 
 print_message "Testing logging and message functions" "banner"
 
-# 2. Test log_message
+# Test log_message
 log_message "Test command" "1" "Sample error message"
 
-# 3. Test run_command
+# Test run_command
 print_message "Test run_command" title
 run_command "sleep 2"
 run_command "ls -l /nonexistent" # deliberately fails to test logging
@@ -111,7 +113,7 @@ run_command "ls -l /nonexistent" # deliberately fails to test logging
 print_message "" blank
 print_message "Testing check functions" "banner"
 
-# 4. Test check_if_not_empty
+# Test check_if_not_empty
 print_message "check_if_not_empty" title
 if check_if_not_empty "sample"; then
 	print_message "check_if_not_empty passed" "confirm"
@@ -124,14 +126,14 @@ if ! check_if_not_empty ""; then
 	print_message "" blank
 fi
 
-# 5. Test check_if_file_exists
+# Test check_if_file_exists
 print_message "check_if_file_exists" title
 if check_if_file_exists "tests/test"; then
 	print_message "check_if_file_exists passed" "confirm"
 	print_message "" blank
 fi
 
-# 6. Test check_if_xcode_installed
+# Test check_if_xcode_installed
 print_message "check_if_xcode_installed" title
 if check_if_xcode_installed; then
 	print_message "Xcode CLI Tools are installed." "confirm"
@@ -141,7 +143,7 @@ else
 	print_message "" blank
 fi
 
-# 7. Test check_if_app_store_authenticated
+# Test check_if_app_store_authenticated
 print_message "check_if_app_store_authenticated" title
 if check_if_app_store_authenticated; then
 	print_message "Authenticated to App Store." "confirm"
@@ -151,13 +153,13 @@ else
 	print_message "" blank
 fi
 
-# 8. Test get_username
+# Test get_username
 print_message "get_username" title
 username=$(get_username)
 print_message "${INDENT}Current Username: $username" "note"
 print_message "" blank
 
-# 9. Test check_if_user_is_admin
+# Test check_if_user_is_admin
 print_message "check_if_user_is_admin" title
 if check_if_user_is_admin; then
 	print_message "User is admin." "confirm"
@@ -168,31 +170,31 @@ fi
 print_message "" blank
 print_message "Testing file operations" "banner"
 
-# 10. Test download_from_url
+# Test download_from_url
 print_message "download_from_url" title
 download_from_url "https://www.example.com" "example.html"
 
-# 11. Test unzip_file
+# Test unzip_file
 # Requires a sample zip file at ~/Downloads/test.zip for proper testing
 print_message "unzip_file" title
 unzip_file "test.zip"
 
-# 12. Test unmount_file
+# Test unmount_file
 # Requires a valid DMG named TestApp.dmg in ~/Downloads for proper testing
 print_message "unmount_file" title
 unmount_file "TestApp.dmg" "TestApp"
 
-# 13. Test move_application
+# Test move_application
 # Requires an application named TestApp.app in ~/Downloads
 print_message "move_application" title
 move_application "TestApp.app"
 
-# 14. Test mkd
+# Test mkd
 print_message "mkd" title
 mkd tests/test_dir
 mkd tests/test_dir  # Re-run to test existing directory logic
 
-# 15. Test cli_is_installed
+# Test cli_is_installed
 print_message "" blank
 print_message "cli_is_installed" title
 if [ "$(cli_is_installed zsh)" -eq 1 ]; then
